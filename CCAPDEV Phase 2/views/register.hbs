@@ -7,26 +7,26 @@
             <div class="col-lg-3"></div>
             <div class="col-lg-6">
                 <div id="ui">
-                    <h1 class="text-white">Register An Account</h1>
-                    <form class="form-group text-center" autocomplete="off" action="/" method="POST">
+                    <h1 class="text-white">Register An Account{{title}}</h1>
+                    <form class="form-group text-center" autocomplete="off" action="/register" method="POST">
                         <div class="row">
                             <div class="col-lg-6">
                                 <label>First Name: </label>
-                                <input placeholder="Enter First Name" class="form-control" type="text" name="fname" id="fname">
+                                <input placeholder="Enter First Name" class="form-control" type="text" name="firstName" id="firstName" value="{{account.firstName}}">
                             </div>
                             <div class="col-lg-6">
                                 <label>Last Name: </label>
-                                <input placeholder="Enter Last Name" class="form-control" type="text" name="lname" id="lname">
+                                <input placeholder="Enter Last Name" class="form-control" type="text" name="lastName" id="lastName" value="{{account.lastName}}">
                             </div>
                         </div>
                         <br>
                         <label>Username</label>
-                        <input placeholder="Enter Username" class="form-control" type="text" name="username" id="username">
+                        <input placeholder="Enter Username" class="form-control" type="text" name="username" id="username" value="{{account.username}}">
                         <br>
                         <div class="row">
                             <div class="col-lg-6">
                                 <label>Password: </label>
-                                <input placeholder="Enter Password" class="form-control" type="password" name="password" id="password">
+                                <input placeholder="Enter Password" class="form-control" type="password" name="password" id="password" value="{{account.password}}">
                             </div>
                             <div class="col-lg-6">
                                 <label>Retype Password: </label>
