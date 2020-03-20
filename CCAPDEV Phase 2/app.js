@@ -10,7 +10,11 @@ app.set('view engine', '.hbs');
 
 app.set('port', (process.env.PORT || 3000));
 
-app.get('/', function(req, res){
+app.get('/login', (req, res)=>{
+    res.render('login');
+});
+
+app.get('/', (req, res)=>{
     res.render('home');
 });
 
