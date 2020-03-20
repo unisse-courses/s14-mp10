@@ -28,17 +28,17 @@ app.get('/home', (req, res)=>{
     res.render('home');
 });
 
-// app.get('/', (req, res)=>{
-//     res.render('register');
-// });
+app.get('/', (req, res)=>{
+    res.render('register');
+});
 
-// app.post('/', (req,res)=>{
-//     res.render(req.body);
-// });
+app.post('/', (req,res)=>{
+    res.render(req.body);
+});
 
 
 app.listen(app.get('port'), function(){
   console.log('server started on port ' + app.get('port'));
 });
 
-app.use('/account', accountController);
+// app.use('/account', accountController);
