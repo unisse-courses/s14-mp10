@@ -4,6 +4,7 @@ var exphbs = require('express-handlebars');
 var bodyparser = require('body-parser');
 require('./models/db');
 var registerController = require('./controllers/registerController');
+var loginController = require('./controllers/loginController');
 
 var app = express();
 
@@ -46,3 +47,4 @@ app.listen(app.get('port'), function(){
 
 
 app.use('/register', registerController);
+app.use('/login', loginController)
