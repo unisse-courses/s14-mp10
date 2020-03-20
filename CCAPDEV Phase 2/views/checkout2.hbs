@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/CCAPDEV Phase 2/public/css/checkout2.css">
+
+<div class="container">
+            <div class="col-lg-12">
+                <div id="ui">
+                    <h1 class="text-white">Checking Out</h1>
+                    <form class="form-group text-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>Fullname: </label>
+                                <label class="form-control">{{account.name}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Credit Card Number: </label>
+                                <input placeholder="Enter Credit Card Information" class="form-control" type="text" name="fname" id="fname">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>Address: </label>
+                                <label class="form-control">{{account.address}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Expiration Date: </label>
+                                <input placeholder="Enter Expiration Date Here" class="form-control" type="text" name="fname" id="fname">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>CVV: </label>
+                                <input placeholder="Enter The CVV Of Your Card" class="form-control" type="text" name="fname" id="fname">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>Phone Number: </label>
+                                <label class="form-control">{{account.contactNumber}}</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-group text-center">
+                        <form action="checkoutView2.html" id="submitStyle"><button class="btn btn-primary btn-block btn-lg" id="submit">Confirm</button></form>
+                    </div>
+                </div>
+            </div>
+        </div>

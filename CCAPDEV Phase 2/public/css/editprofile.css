@@ -1,9 +1,12 @@
 body{
     background-color: #2c3e50;
 }
-
 #nav-search{
     margin-right: 100px;
+}
+
+.container{
+    margin-top: -230px;
 }
 
 #cat{
@@ -27,8 +30,4 @@ body{
 
 #submit{
     background-color: orange;
-}
-
-body{
-    background-color: #2c3e50;
 }

@@ -12,6 +12,10 @@ app.set('view engine', '.hbs');
 
 app.set('port', (process.env.PORT || 3000));
 
+app.get('/', (req,res) => res.render('welcome',{
+    title: 'Welcome to ShopHub!'
+}));
+
 app.get('/login', (req, res)=>{
     res.render('login');
 });
