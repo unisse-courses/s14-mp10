@@ -19,6 +19,8 @@ function insertRecord(req, res){
     account.lastName = req.body.lastName;
     account.username = req.body.username;
     account.password = req.body.password;
+    account.address = req.body.address;
+    account.contactNumber = req.body.contactNumber;
     account.save((err, doc) => {
         if(!err){
             res.redirect('/home');
