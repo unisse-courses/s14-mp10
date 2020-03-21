@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 var accontSchema = new mongoose.Schema({
     firstName: {type:String},
-    lastName: {type:String},
+    lastName: {type:String},    
     username: {type:String},
-    password: {type:String},
+    password: {type:String}
 });
 
-mongoose.model('account', accontSchema);
+mongoose.model('Account', accontSchema);
