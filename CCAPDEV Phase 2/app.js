@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var exphbs = require('express-handlebars');
 var bodyparser = require('body-parser');
+var session = require('express-session');
 require('./models/db');
 var registerController = require('./controllers/registerController');
 var loginController = require('./controllers/loginController');
@@ -9,10 +10,11 @@ var loginController = require('./controllers/loginController');
 var app = express();
 
 app.use(express.static('public'));
-
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
+
+app.use(session({secret: 'ShopHub'}));
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -25,13 +27,17 @@ app.get('/', (req,res) => res.render('welcome',{
     title: 'Welcome to ShopHub!'
 }));
 
-app.get('/login', (req, res)=>{
-    res.render('login');
-});
-
 app.get('/home', (req, res)=>{
     res.render('home');
 });
+
+app.post('/login', function(req,res){
+    req.session.username = req.body.username;
+})
+
+app.get('/profile', (req,res) => res.render('profile',{
+
+}));
 
 // app.get('/register', (req, res)=>{
 //     res.render('register');
