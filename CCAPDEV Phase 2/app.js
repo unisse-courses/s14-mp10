@@ -8,9 +8,8 @@ var cookieParser = require('cookie-parser');
 var expressValidator = require('express-validator');
 var router = express.Router();
 
-
 require('./models/db');
-require('./seed/product-seeder')
+// require('./seed/product-seeder');
 var registerController = require('./controllers/registerController');
 var loginController = require('./controllers/loginController');
 var homeController = require('./controllers/homeController');
@@ -50,6 +49,7 @@ app.get('/', function(req,res,next){
       title : 'Welcome To ShopHub!'
     });
 })
+
 
 app.get('/profile', (req,res) => res.render('profile',{
     

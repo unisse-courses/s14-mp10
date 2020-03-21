@@ -4,8 +4,15 @@ var Product = require('../models/product');
 
 //GET Home Page
 router.get('/', (req, res, next) => {
-    var products = Product.find();
-    res.render('home', {title: 'ShopHub', products: products});
+    Product.find((err, docs)=>{
+        var productChunks = [];
+        var chunkSize = 3;
+        for(var i=0; i<docs.length; i+= chunkSize)
+        {
+            productChunks.push(docs.slice(i, i+chunkSize));
+        }
+        res.render('home', {products: docs});
+    });
 });
 
 
