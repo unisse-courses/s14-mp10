@@ -26,9 +26,9 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(bodyparser.json());
 
-app.use(expressValidator());
+// app.use(expressValidator());
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // app.use(
 //     session({
@@ -39,8 +39,7 @@ app.use(cookieParser());
 //     }));
 
 app.get('/', function(req,res,next){ 
-    // res.render('welcome', {titile: 'Welcome to ShopHub!', success: false,errors: req.session.errors});
-    // req.sessions.errors = null;
+    res.render('welcome');
 })
 
 router.post('/submit', function(req,res,next){
