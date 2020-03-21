@@ -3,7 +3,8 @@ var path = require('path');
 var exphbs = require('express-handlebars');
 var bodyparser = require('body-parser');
 require('./models/db');
-var accountController = require('./controllers/accountController');
+var registerController = require('./controllers/registerController');
+var loginController = require('./controllers/loginController');
 
 var app = express();
 
@@ -32,17 +33,18 @@ app.get('/home', (req, res)=>{
     res.render('home');
 });
 
-app.get('/', (req, res)=>{
-    res.render('register');
-});
+// app.get('/register', (req, res)=>{
+//     res.render('register');
+// });
 
-app.post('/', (req,res)=>{
-    res.render(req.body);
-});
+// app.post('/', (req,res)=>{
 
+// });
 
 app.listen(app.get('port'), function(){
   console.log('server started on port ' + app.get('port'));
 });
 
-// app.use('/account', accountController);
+
+app.use('/register', registerController);
+app.use('/login', loginController)
