@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var employeeSchema = new mongoose.Schema({
-    fName: {type:String},
-    lName: {type:String},
+var accontSchema = new mongoose.Schema({
+    firstName: {type:String},
+    lastName: {type:String},
     username: {type:String},
     password: {type:String},
 });
 
-mongoose.model('Employee', employeeSchema);
+mongoose.model('account', accontSchema);
