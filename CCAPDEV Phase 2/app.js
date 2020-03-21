@@ -5,6 +5,8 @@ var bodyparser = require('body-parser');
 var session = require('express-session');
 var accounts = require('./models/account.model');
 var cookieParser = require('cookie-parser');
+var expressValidator = require('express-validator');
+var router = express.Router();
 require('./models/db');
 var registerController = require('./controllers/registerController');
 var loginController = require('./controllers/loginController');
@@ -24,25 +26,26 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(bodyparser.json());
 
+app.use(expressValidator());
+
 app.use(cookieParser());
 
-app.use(
-    session({
-        secret:'ssshhh', 
-        name: 'ShopHub',
-        saveUninitialized: true, 
-        resave: true
-    }));
+// app.use(
+//     session({
+//         secret:'ssshhh', 
+//         name: 'ShopHub',
+//         saveUninitialized: true, 
+//         resave: true
+//     }));
 
-var logout = function(req,res,next){
-    debugger("logout()");
-    req.session.loggedIn = false;
-    res.redirect('/');
-}
+app.get('/', function(req,res,next){ 
+    // res.render('welcome', {titile: 'Welcome to ShopHub!', success: false,errors: req.session.errors});
+    // req.sessions.errors = null;
+})
 
-app.get('/', (req,res) => res.render('welcome',{
-    title: 'Welcome to ShopHub!'
-}));
+router.post('/submit', function(req,res,next){
+    
+});
 
 
 app.get('/home', (req, res)=>{
