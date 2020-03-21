@@ -26,7 +26,7 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(bodyparser.json());
 
-app.use(expressValidator());
+// app.use(expressValidator());
 
 app.use(cookieParser());
 
