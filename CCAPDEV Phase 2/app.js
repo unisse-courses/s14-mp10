@@ -5,11 +5,11 @@ var bodyparser = require('body-parser');
 var session = require('express-session');
 var accounts = require('./models/account.model');
 var cookieParser = require('cookie-parser');
-var expressValidator = require('express-validator');
 var router = express.Router();
 
 require('./models/db');
 // require('./seed/product-seeder');
+var profileController = require('./controllers/profileController');
 var registerController = require('./controllers/registerController');
 var loginController = require('./controllers/loginController');
 var homeController = require('./controllers/homeController');
@@ -32,36 +32,27 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(bodyparser.json());
 
-// app.use(expressValidator());
+app.use(cookieParser());
 
-// app.use(cookieParser());
-
-// app.use(
-//     session({
-//         secret:'ssshhh', 
-//         name: 'ShopHub',
-//         saveUninitialized: true, 
-//         resave: true
-//     }));
+ app.use(
+    session({
+        secret:'ssshhh', 
+        name: 'ShopHub',
+        saveUninitialized: true, 
+        resave: true
+    }));
 
 app.get('/', function(req,res,next){ 
+    console.log(req.session.username); //For testing purposes
     res.render('welcome',{
-      title : 'Welcome To ShopHub!'
+      title : 'Welcome To ShopHub!',
     });
 })
 
-
-app.get('/profile', (req,res) => res.render('profile',{
-    
-}));
-
-// app.get('/register', (req, res)=>{
-//     res.render('register');
-// });
-
-// app.post('/', (req,res)=>{
-
-// });
+app.get('/logout', function(req,res,next){ 
+    req.session.destroy();
+    res.redirect("/");
+})
 
 app.listen(app.get('port'), function(){
   console.log('server started on port ' + app.get('port'));
@@ -70,3 +61,4 @@ app.listen(app.get('port'), function(){
 app.use('/home', homeController);
 app.use('/register', registerController);
 app.use('/login', loginController);
+app.use('/profile', profileController);
