@@ -7,11 +7,18 @@ var accounts = require('./models/account.model');
 var cookieParser = require('cookie-parser');
 var expressValidator = require('express-validator');
 var router = express.Router();
+
+
 require('./models/db');
+require('./seed/product-seeder')
 var registerController = require('./controllers/registerController');
 var loginController = require('./controllers/loginController');
+var homeController = require('./controllers/homeController');
+var mongoose = require('mongoose');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/AccountDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
@@ -47,10 +54,6 @@ router.post('/submit', function(req,res,next){
 });
 
 
-app.get('/home', (req, res)=>{
-    res.render('home');
-});
-
 app.get('/profile', (req,res) => res.render('profile',{
     
 }));
@@ -67,6 +70,6 @@ app.listen(app.get('port'), function(){
   console.log('server started on port ' + app.get('port'));
 });
 
-
+app.use('/home', homeController);
 app.use('/register', registerController);
-app.use('/login', loginController)
+app.use('/login', loginController);

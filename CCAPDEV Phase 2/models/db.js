@@ -10,3 +10,4 @@ mongoose.connect('mongodb://localhost:27017/AccountDB', {useNewUrlParser: true, 
 
 
 require('./account.model');
+require('./product');
