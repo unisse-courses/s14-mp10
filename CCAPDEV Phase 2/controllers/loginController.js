@@ -21,8 +21,10 @@ function loginRecord(req, res){
     Account.findOne({username: username, password: password}, function(err, user){
         if(err){
             console.log(err);
+            res.redirect('/login');
             return res.status(500).send();
         }else if(!user){
+            res.redirect('/login');
             return res.status(404).send();
         }else{
             res.redirect('/home');
