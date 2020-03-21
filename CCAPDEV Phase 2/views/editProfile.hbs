@@ -5,24 +5,24 @@
             <div class="col-lg-12">
                 <div id="ui">
                     <h1 class="text-white">Editing Your Profile Information</h1>
-                    <form class="form-group text-center" method="POST" action="/api/account">
+                    <form class="form-group text-center" method="POST" action="/profile">
                         <br>
                         <div class="row">
                             <div class="col-lg-6">
                                 <label>First Name: </label>
-                                <input placeholder="Enter First Name" class="form-control" type="text" name="firstName" id="fname">
+                                <input placeholder="Enter First Name" class="form-control" type="text" name="firstName" id="fname" value="{{account.firstName}}">
                             </div>
                             <div class="col-lg-6">
                                 <label>Last Name: </label>
-                                <input placeholder="Enter Last Name" class="form-control" type="text" name="lastName" id="fname">
+                                <input placeholder="Enter Last Name" class="form-control" type="text" name="lastName" id="fname" value="{{account.lastName}}">
                             </div>
                         </div>
                         <br>
                         <label>Complete Address:</label>
-                        <input placeholder="Enter Complete Address" class="form-control" type="text" name="address" id="fname">
+                        <input placeholder="Enter Complete Address" class="form-control" type="text" name="address" id="fname" value="{{account.address}}">
                         <br>
                         <label>Phone Number:</label>
-                        <input placeholder="Enter Phone Number" class="form-control" type="text" name="contactNumber" id="fname">
+                        <input placeholder="Enter Phone Number" class="form-control" type="number" name="contactNumber" id="fname" value="{{account.contactNumber}}">
                         <br>
                         <input class="btn btn-primary btn-block btn-lg" type="submit" name="submit" id="submit" value="Confirm Changes">
                     </form>
