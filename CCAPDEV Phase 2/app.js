@@ -46,13 +46,10 @@ app.use(bodyparser.json());
 //     }));
 
 app.get('/', function(req,res,next){ 
-    res.render('welcome');
+    res.render('welcome',{
+      title : 'Welcome To ShopHub!'
+    });
 })
-
-router.post('/submit', function(req,res,next){
-    
-});
-
 
 app.get('/profile', (req,res) => res.render('profile',{
     
