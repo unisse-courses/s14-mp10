@@ -17,7 +17,7 @@ var mongoose = require('mongoose');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/AccountDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));

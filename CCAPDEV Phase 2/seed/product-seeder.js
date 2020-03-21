@@ -1,7 +1,7 @@
 var Product = require('../models/product');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/AccountDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, useUnifiedTopology: true});
 
 var products = [
     new Product({
