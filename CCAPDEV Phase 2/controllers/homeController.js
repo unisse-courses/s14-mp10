@@ -5,7 +5,7 @@ var Cart = require('../models/cart')
 
 //GET Home Page
 router.get('/', (req, res, next) => {
-    Product.find((err, docs)=>{
+    Product.find(function(err, docs){
         var productChunks = [];
         var chunkSize = 3;
         for(var i=0; i<docs.length; i+= chunkSize)
@@ -14,6 +14,12 @@ router.get('/', (req, res, next) => {
         }
         res.render('home', {products: docs});
     });
+
+    // Product.find(function(err, docs){
+    //     for(var i=0; i<docs.length; i++)
+    //     console.log("hello");
+    //     res.render('home', {products: docs});
+    // });
 });
 
 router.get('/add-to-cart/:id', (req, res, next) =>{

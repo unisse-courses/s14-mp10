@@ -1,17 +1,14 @@
 <link rel="stylesheet" href="css/main.css">
 
 <div class="container">
-<h2 class="bg-dark text-white">New Arrivals</h2>
+<h2 class="bg-dark text-white">Our Shop</h2>
 <div class="row">
     {{#each products}}
             <div class="col-md-3">
                 {{#each this}}
-                <div class="product-top">
                     <img src="{{this.imagePath}}" height="200px" width="250px" alt="">
                         <button type="button" class="btn btn-secondary" title="Quick Shop" onclick="window.location.href = '../html/registeredProductView.html';"><i class="fa fa-eye"></i></button>
                         <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
-                </div>
-                <div class="product-bottom text-center">
                     {{!-- <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -19,7 +16,6 @@
                     <i class="fa fa-star-half-o"></i> --}}
                     <h3>{{this.title}}</h3>
                     <h5>{{this.price}}</h5>
-                </div>
                 {{/each}}
             </div>
     {{/each}}
