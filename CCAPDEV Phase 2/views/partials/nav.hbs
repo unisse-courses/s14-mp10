@@ -9,6 +9,12 @@
                 <li class="nav-item"><a href="/addProduct" class="nav-link">Add Product</a></li>
                 <li class="nav-item"><input class="nav-link form-control" type="text" name="" id="nav-search"></li>
                 <li class="nav-item"><button class="nav-link form-control" id="btnSearchItem">Search</button></li>
+                <li class="nav-item">
+                    <a id="cart" href="/home/shopping-cart" class="nav-link">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+                        <span class="badge">({{session.cart.totalQty}})</span>
+                    </a>
+                </li>
                 <li class="nav-item"><a id="checkout" href="/checkout1" class="nav-link">Checkout</a></li>
                 <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
             </ul>
