@@ -6,17 +6,17 @@
     {{#each products}}
             <div class="col-md-3">
                 {{#each this}}
+                    {{#if this._id}}
                     <img src="{{this.imagePath}}" height="200px" width="250px" alt="">
-                        <button type="button" class="btn btn-secondary" title="Quick Shop" onclick="window.location.href = '../html/registeredProductView.html';"><i class="fa fa-eye"></i></button>
-                        <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
-                    {{!-- <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i> --}}
-                    <h3>{{this.title}}</h3>
-                    <h5>{{this.price}}</h5>
+                    <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart">{{this.title}} {{this.price}}<i class="fa fa-shopping-cart"></i></a>
+                    {{/if}}
                 {{/each}}
+                <br>
+                <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
             </div>
     {{/each}}
 </div>
