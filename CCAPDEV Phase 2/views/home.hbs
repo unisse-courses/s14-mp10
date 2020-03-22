@@ -6,17 +6,19 @@
     {{#each products}}
             <div class="col-md-3">
                 {{#each this}}
-                    {{#if this._id}}
+                    {{#if this.imagePath}}
                     <img src="{{this.imagePath}}" height="200px" width="250px" alt="">
-                    <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart">{{this.title}} {{this.price}}<i class="fa fa-shopping-cart"></i></a>
-                    {{/if}}
-                {{/each}}
-                <br>
-                <i class="fa fa-star"></i>
+                    <a href="#" type="button" class="btn btn-secondary" title="View Product"><i class="fa fa-eye"></i></a>
+                    <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <h3>{{this.title}}</h3>
+                    <h5>Php {{this.price}}.00</h5>
+                    <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-half-o"></i>
+                    {{/if}}
+                {{/each}}
             </div>
     {{/each}}
 </div>
