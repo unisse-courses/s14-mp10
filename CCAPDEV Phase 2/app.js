@@ -6,6 +6,7 @@ var session = require('express-session');
 var accounts = require('./models/account.model');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
+var MongoStore = require('connect-mongo')(session);
 
 require('./models/db');
 // require('./seed/product-seeder');
@@ -39,7 +40,9 @@ app.use(cookieParser());
         secret:'ssshhh', 
         name: 'ShopHub',
         saveUninitialized: true, 
-        resave: true
+        resave: true,
+        store: new MongoStore({mongooseConnection: mongoose.connection}),
+        cookie: {maxAge: 180*60*100}
     }));
 
 app.get('/', function(req,res,next){ 
@@ -53,6 +56,11 @@ app.get('/logout', function(req,res,next){
     req.session.destroy();
     res.redirect("/");
 })
+
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
 
 app.listen(app.get('port'), function(){
   console.log('server started on port ' + app.get('port'));
