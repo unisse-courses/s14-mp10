@@ -27,6 +27,30 @@ var products = [
         title: 'Skinny Black Jeans',
         description: 'Good Skinny Black Jeans',
         price: 1000
+    }),
+    new Product({
+        imagePath: 'https://i.ebayimg.com/images/g/ycAAAOSw3qRbrbcG/s-l300.jpg',
+        title: 'Black Hoodie',
+        description: 'Good Black Hoodie',
+        price: 800
+    }),
+    new Product({
+        imagePath: 'https://cdni.llbean.net/is/image/wim/215649_1165_41?hei=1095&wid=950&resMode=sharp2&defaultImage=llbstage/A0211793_2',
+        title: 'Khaki Shorts',
+        description: 'Good Khaki Shorts',
+        price: 500
+    }),
+    new Product({
+        imagePath: 'https://pmcfootwearnews.files.wordpress.com/2017/04/am97sil-copy.jpg?w=700&h=437&crop=1',
+        title: 'Nike Shoes',
+        description: 'Good Pacool Shoes',
+        price: 5000
+    }),
+    new Product({
+        imagePath: 'https://images.vans.com/is/image/Vans/D3HY28-HERO?$583x583$',
+        title: 'Vans Shoes',
+        description: 'Good Pacool Shoes pt2',
+        price: 3000
     })
 ];
 
