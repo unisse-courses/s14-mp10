@@ -16,6 +16,7 @@ var loginController = require('./controllers/loginController');
 var homeController = require('./controllers/homeController');
 var checkoutController1 = require('./controllers/checkoutController1');
 var editProfileController = require('./controllers/editProfileController');
+var addProductController = require('./controllers/addProductController');
 var mongoose = require('mongoose');
 
 var app = express();
@@ -74,3 +75,4 @@ app.use('/login', loginController);
 app.use('/profile', profileController);
 app.use('/checkout1', checkoutController1);
 app.use('/editProfile', editProfileController);
+app.use('/addProduct', addProductController);

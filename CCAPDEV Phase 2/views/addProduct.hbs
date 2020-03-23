@@ -1,4 +1,6 @@
-<link rel="stylesheet" href="/CCAPDEV Phase 2/public/css/navbarStyle.css">
+<head>
+    <link rel="stylesheet" href="css/registerStyle.css">
+</head>
 
 <div class="container">
             <div class="row">
@@ -6,11 +8,11 @@
                 <div class="col-lg-6">
                     <div id="ui">
                         <h1 class="text-white">Add a Product</h1>
-                        <form class="form-group text-center" action="../html/registeredHomeView.html">
+                        <form class="form-group text-center" action="/addProduct">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label>Product Name: </label>
-                                    <input placeholder="Enter Product Name" class="form-control" type="text" name="name" id="fname">
+                                    <input placeholder="Enter Product Name" class="form-control" type="text" name="productName" id="fname">
                                 </div>
                                 <div class="col-lg-6">
                                     <label>Price: </label>
@@ -23,7 +25,7 @@
                             <br>
                             <label>Add Photo:</label>
                             <br>
-                            <input class="text-white" type="file" name="" id="">
+                            <input class="text-white" type="file" name="photo" id="">
                             <br>
                             <br>
                             <input class="btn btn-primary btn-block btn-lg" type="submit" name="submit" id="submit" value="Submit">
