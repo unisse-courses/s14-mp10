@@ -8,7 +8,7 @@
                 <div class="col-lg-6">
                     <div id="ui">
                         <h1 class="text-white">Add a Product</h1>
-                        <form class="form-group text-center" action="/addProduct">
+                        <form class="form-group text-center" action="/addProduct" method="POST">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label>Product Name: </label>
@@ -25,7 +25,13 @@
                             <br>
                             <label>Add Photo:</label>
                             <br>
-                            <input class="text-white" type="file" name="photo" id="">
+                            {{!-- <input class="text-white" type="file" name="photo" id=""> --}}
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file" name="image">
+                                    </div>
+                                </div>
                             <br>
                             <br>
                             <input class="btn btn-primary btn-block btn-lg" type="submit" name="filename" id="submit" value="Submit">

@@ -5,7 +5,8 @@ const path = require('path');
 const multer = require('multer');
 const session = require('express-session');
 const cookikie = require('cookie-parser');
-const upload_path = path.join("./", "/public/pictures")
+const upload_path = path.join("./", "/public/pictures");
+
 const upload = multer({
     dest: upload_path,
     limits: {
@@ -20,7 +21,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', upload.single('filePath'), (req, res) => {
+router.post('/', upload.single('image'), (req, res) => {
     var product = new Product();
     var filename = "default";
     var pictureName = req.body.photo.toString();
