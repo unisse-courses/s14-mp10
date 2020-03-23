@@ -7,7 +7,6 @@ const Account = mongoose.model('Account');
 
 router.get('/', (req, res) => {
     res.render('editProfile', {
-        
     });
 });
 
@@ -20,19 +19,16 @@ function updatingRecord(req,res){
     var lName = req.body.lastName;
     var newAddress = req.body.address;
     var newNumber = req.body.contactNumber;
+    var username = req.session.username;
 
-    Account.update(
-        {"username": req.session.username},
-        {$set: {"firstName" : req.body.firstName}},
-        {$set: {"lastName" : req.body.lastName}},
-        {$set: {"address" : req.body.address}},
-        {$set: {"contactNumber" : req.body.contactNumber}}
-    )
+    Account.update({"username": username}, 
+    {$set: {"firstName": fName, 
+    "lastName": lName, 
+    "address": newAddress, 
+    "contactNumber": newNumber}
+    });
 
-    req.session.firstName = fName;
-    req.session.lastName = lName;
-    req.session.address = newAddress;
-    req.session.contactNumber = newNumber;
+    res.redirect('/profile');
 }
 
 module.exports = router;
