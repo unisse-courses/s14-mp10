@@ -73,6 +73,6 @@ app.use('/home', homeController);
 app.use('/register', registerController);
 app.use('/login', loginController);
 app.use('/profile', profileController);
-app.use('/checkout1', checkoutController1);
+// app.use('/checkout1', checkoutController1);
 app.use('/editProfile', editProfileController);
 app.use('/addProduct', addProductController);

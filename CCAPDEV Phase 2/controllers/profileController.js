@@ -19,4 +19,7 @@ router.get('/' ,(req,res) => {
         contactNumber: req.session.contactNumber
     });
 });
+
+
+
 module.exports = router;
