@@ -1,7 +1,10 @@
 const express = require('express');
 var router = express.Router();
+const mongoose = require('mongoose')
+var Account = mongoose.model('Account');
 var Product = require('../models/product');
-var Cart = require('../models/cart')
+var Cart = require('../models/cart');
+var Order = require('../models/order');
 
 //GET Home Page
 router.get('/', (req, res, next) => {
@@ -73,12 +76,25 @@ router.get('/remove/:id', function(req,res,next){
 });
 
 router.get('/removeAll', function(req,res,next){
-    var productID = req.params.id;
-    var cart = new Cart(req.session.cart ? req.session.cart: {});
+    var cart = new Cart(req.session.cart);
 
-    cart.removeAll();
-    req.session.cart = cart;
-    res.redirect('/home');
+    var order = new Order({
+        userID: req.session.id,
+        username: req.session.username,
+        cart: req.session.cart,
+        address: req.session.address,
+        contact: req.session.contactNumber
+    });
+
+    order.save((err, doc) => {
+        if(!err){
+            cart.removeAll();
+            req.session.cart = cart;
+            res.redirect('/home');
+            console.log(order);
+        }
+    });
+
 });
 
 router.get('/shopping-cart', function(req,res,next){
