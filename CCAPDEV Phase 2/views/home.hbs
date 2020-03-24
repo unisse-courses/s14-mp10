@@ -8,7 +8,7 @@
                 {{#each this}}
                     {{#if this.imagePath}}
                     <img src="{{this.imagePath}}" height="200px" width="250px" alt="">
-                    <a href="" type="button" class="btn btn-secondary" title="View Product"><i class="fa fa-eye"></i></a>
+                    <a href="/home/{{this._id}}" type="button" class="btn btn-secondary" title="View Product"><i class="fa fa-eye"></i></a>
                     <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
                     <h3>{{this.title}}</h3>
                     <h5>Php {{this.price}}.00</h5>

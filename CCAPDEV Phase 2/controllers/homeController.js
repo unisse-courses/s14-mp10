@@ -68,4 +68,15 @@ router.get('/shopping-cart', function(req,res,next){
 
 });
 
+router.get('/:id', (req,res,next) => {
+    Product.findById(req.params.id)
+    .exec(function (err, product) {
+        if (err) {
+            console.error('Error retrieving all product by id!');
+        } else {
+            res.render('product', {_id: product._id, imagePath: product.imagePath, title: product.title, description: product.description, price: product.price});
+        }
+    })
+});
+
 module.exports = router;
