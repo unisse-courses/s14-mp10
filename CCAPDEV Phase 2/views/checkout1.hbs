@@ -53,6 +53,39 @@ h4{
     margin-top: 7%;
 }
 
+.bg-modal {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-contents {
+	height: 300px;
+	width: 500px;
+	background-color: #2c3e50;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#modal{
+    margin: 20px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+}
+
+#modalButton{
+    background-color: orange;
+    margin-top: 50px;
+} 
+
 </style>
 
 <div class="container">
@@ -117,9 +150,9 @@ h4{
                         <div class="col-lg-3">
                             <button class="btn btn-primary btn-xs dropdown-toggle" id="actionButton" data-toggle="dropdown" type="button">Action <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                    <li><a href="/home/add/{{this.item._id}}">Add by 1</a></li>
-                                    <li><a href="/home/reduce/{{this.item._id}}">Reduce by 1</a></li>
-                                    <li><a href="/home/remove/{{this.item._id}}">Remove All</a></li>
+                                    <li><a href="/addProduct/add/{{this.item._id}}">Add by 1</a></li>
+                                    <li><a href="/addProduct/reduce/{{this.item._id}}">Reduce by 1</a></li>
+                                    <li><a href="/addProduct/removeAll/{{this.item._id}}">Remove All</a></li>
                             </ul>
                         </div>
                     </div>
@@ -131,7 +164,22 @@ h4{
 {{else}}
 {{/if}}
                     </form>
-                    <form id="submitStyle"><button class="btn btn-primary btn-block btn-lg" id="submit">Confirm Purchase!</button></form>
+                    <a href="/home" type="button" class="btn btn-primary btn-block btn-lg" style="background-color: orange;" id="button">Checkout</a>
                 </div>
             </div>
         </div>
+
+    <!-- Modal Section-->
+    {{!-- <div class="bg-modal">
+	<div class="modal-contents">
+			<h5 style="color: white;" id="modal">Thank you for your purchase</h5>
+			<a href="/home" type="button" class="btn btn-primary btn-block btn-lg" id="modalButton">Checkout</a>
+
+	</div>
+</div>
+
+    <script>
+        document.getElementById('button').addEventListener("click", function() {
+	    document.querySelector('.bg-modal').style.display = "flex";
+        });
+    </script> --}}
