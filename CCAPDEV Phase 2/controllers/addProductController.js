@@ -5,15 +5,6 @@ const path = require('path');
 const multer = require('multer');
 const session = require('express-session');
 const cookikie = require('cookie-parser');
-// const upload_path = path.join("./", "/public/pictures");
-
-// const upload = multer({
-//     dest: upload_path,
-//     limits: {
-//         fileSize: 1000000,
-//         files: 1
-//     }
-// });
 const Product = mongoose.model('Product');
 
 router.get('/', (req, res) => {
@@ -37,19 +28,24 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/addComment', (req, res) => {
-    product.imagePath = `pictures/${req.body.picture}`;
-    product.title = req.body.productName;
-    product.price = req.body.price;
-    product.description = req.body.description;
-
-    console.log("THIS IS FILENAME" + product.imagePath); //Testing purposes
-
-    product.save((err, doc) => {
-        if(!err){
-            res.redirect('/home');
-        }
-    });
+router.get('/addComment/:id', (req, res, next) => {
+    var productID = req.params.id;
+    res.render('addComment', {
+        username: req.session.username
+    })
 });
+
+router.post('/addComment', (req,res,next)=>{
+    var productID = req.params.id;
+
+    Product.update({"_id": productID},
+    {
+    $set: {comments: {"_id": productID,
+    "accountName": req.session.username,
+    "commentText": req.body.commentText }}
+    })
+
+    res.redirect('/home')
+})
 
 module.exports = router;

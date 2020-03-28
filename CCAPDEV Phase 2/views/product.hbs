@@ -55,6 +55,11 @@ body{
     font-size: 16px; 
     cursor: pointer; 
   }
+
+#commentBtn{
+    background-color: orange;
+    font-size: 20px;
+}
   
 </style>
 
@@ -83,8 +88,10 @@ body{
                             <a href="/home/add-to-cart/{{_id}}" type="button" class="btn btn-secondary" title="Add to Cart"><span class="fa fa-shopping-cart"></span> Add to Cart</a>
                         </div>
                         <br>
-                        <h3 class="text-white">Comment Section: <input class="btn btn-primary" type="submit" name="submit" id="submit" value="Add A Comment" style="font-size: 20px;"></h3>
-                        <form action="/addComment" method="POST"></form>
+                        <h3 class="text-white">Comment Section: <a href="/addProduct/addComment/{{this._id}}" type="button" class="btn btn-primary" placeholder="Add A Comment" id="commentBtn"><i class="fa fa-plus"></i></a></h3>
+                        <form action="/addComment" method="POST">
+                        
+                        </form>
                         {{!-- <ul class="list-group-item" id="itemContainer">
                             {{#each products}}
                                 <li class="list-group-item" id="itemContainer" style="border-color: white;">
