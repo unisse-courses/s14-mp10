@@ -1,5 +1,5 @@
 <style>
-    body{
+body{
     background-color: #2c3e50;
 }
 
@@ -80,16 +80,24 @@
                                 <label>Description: </label>
                                 <h5 class="text-white">{{description}}</h5>
                             </div>
-                            <a href="/home/add-to-cart/{{_id}}" type="button" class="btn btn-secondary" title="Add to Cart"><span class="fa fa-shopping-cart"></span>Add to Cart</a>
+                            <a href="/home/add-to-cart/{{_id}}" type="button" class="btn btn-secondary" title="Add to Cart"><span class="fa fa-shopping-cart"></span> Add to Cart</a>
                         </div>
                         <br>
-                        <h3 class="text-white">Comment Section: <button>+</button></h3>
-                        <div class="col-lg-12" id="commentArea">
-                            <h6>{{product.commentProfileName}}</h6>
-                            <p>{{product.commentProfileText}}</p>
-                            <input class="btn btn-primary btn-block btn-lg" type="submit" name="submit" id="editButton" value="Edit">
-                        </div>
-                        <br>
+                        <h3 class="text-white">Comment Section: <input class="btn btn-primary" type="submit" name="submit" id="submit" value="Add A Comment" style="font-size: 20px;"></h3>
+                        <form action="/addComment" method="POST"></form>
+                        {{!-- <ul class="list-group-item" id="itemContainer">
+                            {{#each products}}
+                                <li class="list-group-item" id="itemContainer" style="border-color: white;">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h7>{{accountName}}</h7>
+                                            <p>{{commentText}}</p>
+                                        </div>  
+                                    </div>
+                                </li>
+                            {{/each}}
+                    </ul> --}}
+                    <br>
                     </div>
                     </form>
                 </div>

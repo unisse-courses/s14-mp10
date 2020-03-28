@@ -28,7 +28,22 @@ router.post('/', (req, res) => {
     product.price = req.body.price;
     product.description = req.body.description;
 
-    console.log("THIS IS FILENAME" + product.imagePath);
+    console.log("THIS IS FILENAME" + product.imagePath); //Testing purposes
+
+    product.save((err, doc) => {
+        if(!err){
+            res.redirect('/home');
+        }
+    });
+});
+
+router.post('/addComment', (req, res) => {
+    product.imagePath = `pictures/${req.body.picture}`;
+    product.title = req.body.productName;
+    product.price = req.body.price;
+    product.description = req.body.description;
+
+    console.log("THIS IS FILENAME" + product.imagePath); //Testing purposes
 
     product.save((err, doc) => {
         if(!err){
