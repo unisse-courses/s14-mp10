@@ -5,15 +5,15 @@ const path = require('path');
 const multer = require('multer');
 const session = require('express-session');
 const cookikie = require('cookie-parser');
-const upload_path = path.join("./", "/public/pictures");
+// const upload_path = path.join("./", "/public/pictures");
 
-const upload = multer({
-    dest: upload_path,
-    limits: {
-        fileSize: 1000000,
-        files: 1
-    }
-});
+// const upload = multer({
+//     dest: upload_path,
+//     limits: {
+//         fileSize: 1000000,
+//         files: 1
+//     }
+// });
 const Product = mongoose.model('Product');
 
 router.get('/', (req, res) => {
@@ -21,15 +21,14 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', (req, res) => {
     var product = new Product();
-    var filename = "default";
-    var pictureName = req.body.photo.toString();
+    product.imagePath = `pictures/${req.body.picture}`;
     product.title = req.body.productName;
     product.price = req.body.price;
-    product.description = req.body.price;
-    filename = req.file.filename;
-    product.imagePath = filename;
+    product.description = req.body.description;
+
+    console.log("THIS IS FILENAME" + product.imagePath);
 
     product.save((err, doc) => {
         if(!err){
