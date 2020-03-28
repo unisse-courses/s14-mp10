@@ -26,8 +26,9 @@ function loginRecord(req, res){
             res.redirect('/login');
             return res.status(500).send();
         }else if(!user){
-            res.redirect('/login');
-            return res.status(404).send();
+            res.render('login', {
+                message: "Account cannot be found"
+            });
         }else{
             req.session.username = username;
             req.session.firstName = user.firstName;

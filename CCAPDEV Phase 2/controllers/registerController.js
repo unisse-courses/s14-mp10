@@ -23,16 +23,28 @@ function insertRecord(req, res){
     account.password = req.body.password;
     account.address = req.body.address;
     account.contactNumber = req.body.contactNumber;
+    
+
+    Account.findOne({username: account.username}, function(err,user){
+        if(user){
+            console.log("Username is already taken");
+            res.render('register',{
+                message: "Username is already taken"
+            });
+        }else{
+            account.save((err,doc) => {
+                if(!err){
+                    res.redirect('/home');
+                }
+            })
+        }
+    })
+
     req.session.username = req.body.username;
     req.session.firstName = req.body.firstName;
     req.session.lastName = req.body.lastName;
     req.session.address = req.body.address;
     req.session.contactNumber = req.body.contactNumber;
-    account.save((err, doc) => {
-        if(!err){
-            res.redirect('/home');
-        }
-    });
 }
 
 module.exports = router;
