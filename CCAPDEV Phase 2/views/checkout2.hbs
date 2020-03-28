@@ -6,34 +6,28 @@
                     <h1 class="text-white">Checking Out</h1>
                     <form class="form-group text-center">
                         <div class="row">
-                            <div class="col-lg-4">
-                                <br>
-                                <label>Product Name: </label>
-                                <h4>{{product.name}}</h4>
-                            </div>
-                            <div class="col-lg-4">
-                                <br>
-                                <label>Pieces: </label>
-                                <h4>{{product.pieces}}</h4>
-                            </div>
-                            <div class="col-lg-4">
-                                <br>
-                                <label>Price: </label>
-                                <h4>{{product.price}}</h4>
-                            </div>
+                        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                            <ul class="list-group-item">
+                                {{#each products}}
+                                    <li class="list-group-item">
+                                        <span class="badge">Qty: ({{this.qty}})</span>
+                                        <strong>{{this.item.title}}</strong>
+                                        <span class="label label-success">Php {{this.item.price}}</span>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" type="button">Action <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="/home/reduce/{{this.item._id}}">Reduce by 1</a></li>
+                                                <li><a href="/home/remove/{{this.item._id}}">Remove All</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <br>
-                                <label>Total Cost:</label>
-                                <h4>{{product.total}}</h4>
-                                <br>
-                            </div>
-                        </div>
+                    </div>
                     </form>
                     <div class="form-group text-center">
-                        <form action="registeredHomeView.html" id="submitStyle"><button class="btn btn-primary btn-block btn-lg" id="submit">Confirm</button></form>
+                        <form action="checkoutView2.html" id="submitStyle"><a class="btn btn-primary btn-block btn-lg" href="/home/removeAll" id="submit">Buy</a></form>
                     </div>
                 </div>
             </div>
