@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// var commentSchema = new Schema({
+//     username: String, 
+//     commentContent: String
+// })
+
 var productSchema = new mongoose.Schema({
     imagePath: {type:String, required: true},
     title: {type:String, required: true},    

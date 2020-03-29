@@ -19,13 +19,6 @@ router.post('/', (req,res) => {
 })
 
 function updatingRecord(req,res){
-    // Account.update({"username": req.session.username}, 
-    // {$set: {"firstName": req.body.firstName, 
-    // "lastName": req.body.lastName, 
-    // "address": req.body.address, 
-    // "contactNumber": req.body.contactNumber}
-    // });
-
     Account.findOneAndUpdate({username: req.session.username}, req.body, {new: true}, (err, doc) => {
         if(!err){
             req.session.firstName = req.body.firstName;

@@ -9,7 +9,6 @@ var Account = mongoose.model('Account');
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
-var Comment = require('../models/comments');
 
 router.get('/', (req, res) => {
     res.render('addProduct', {
@@ -40,13 +39,13 @@ router.get('/addComment/:id', (req, res, next) => {
 
 router.post('/addComment', (req,res,next)=>{
     var productID = req.params.id;
-    var newComment = {
-        username: req.session.username,
-        commentContent: req.body.commentText
-    }
 
-    Product.update({"_id": productID}, 
-    {$set:{"comments": newComment}})
+        Product.findOne({_id: productID}).then(function(record){
+            record.comments.push({username: req.session.username, commentContent: req.body.commentText});
+            record.save();
+        })
+
+    console.log(req.body.commentText);
 
     res.redirect('/home')
 })
