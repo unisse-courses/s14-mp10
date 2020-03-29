@@ -15,20 +15,37 @@ router.post('/', (req,res) => {
 })
 
 function updatingRecord(req,res){
-    var fName = req.body.firstName;
-    var lName = req.body.lastName;
-    var newAddress = req.body.address;
-    var newNumber = req.body.contactNumber;
-    var username = req.session.username;
+    var valid = true;
+    valid = checkField(req.body.firstName, valid);
+    valid = checkField(req.body.lastName, valid);
+    valid = checkField(req.body.address, valid);
+    valid = checkField(req.body.contactNumber, valid);
 
-    Account.update({"username": username}, 
-    {$set: {"firstName": fName, 
-    "lastName": lName, 
-    "address": newAddress, 
-    "contactNumber": newNumber}
-    });
+    // Account.update({"username": req.session.username}, 
+    // {$set: {"firstName": req.body.firstName, 
+    // "lastName": req.body.lastName, 
+    // "address": req.body.address, 
+    // "contactNumber": req.body.contactNumber}
+    // });
 
+    if(valid == true){
+        console.log("All fields have been changed")
+    }
     res.redirect('/profile');
+}
+
+function checkField(field, val){
+    var valid = val;
+    var validSplit = valid.split(".")[2];
+
+    if(field.val() ==''){
+        vaild = false;
+    }else{
+        Account.update({"username": req.session.username},
+        {$set :{validSplit: field}})
+    }   
+
+    return valid;
 }
 
 module.exports = router;
