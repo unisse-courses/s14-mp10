@@ -16,7 +16,36 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    uploadProduct(req.res);
+    if(req.body.productName === ' '){
+        res.render('addProduct',{
+            message: "No information was given about the product"
+        })
+    }
+
+    Product.findOne({title: req.body.productName}, function(err, item){
+        if(item){
+            res.render('addProduct',{
+                message: "Product already exists"
+            })
+        }
+        else if(req.body === ' '){
+            res.render('addProduct', {
+                message: "No information was given about the product"
+            })
+        }
+        else{
+            var product = new Product();
+            product.imagePath = `pictures/${req.body.picture}`;
+            product.title = req.body.productName;
+            product.price = req.body.price;
+            product.description = req.body.description;
+            product.save((err, doc) => {
+                if(!err){
+                    res.redirect('/home');
+                }
+            })
+        }
+    })
 });
 
 router.get('/addComment/:id', (req, res, next) => {
@@ -84,28 +113,5 @@ router.get('/removeAll', function(req,res,next){
     });
 
 });
-
-function uploadProduct(req,res){
-    var product = new Product();
-    product.imagePath = `pictures/${req.body.picture}`;
-    product.title = req.body.productName;
-    product.price = req.body.price;
-    product.description = req.body.description;
-
-    Product.findOne({title: req.body.productName}, function(err, item){
-        if(item){
-            res.render('addProduct',{
-                message: "Product already exists"
-            })
-        }
-        else{
-            product.save((err, doc) => {
-                if(!err){
-                    res.redirect('/home');
-                }
-            })
-        }
-    })
-}
 
 module.exports = router;
