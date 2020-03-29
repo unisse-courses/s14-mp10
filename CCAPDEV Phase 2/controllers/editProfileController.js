@@ -7,6 +7,10 @@ const Account = mongoose.model('Account');
 
 router.get('/', (req, res) => {
     res.render('editProfile', {
+        firstName: req.session.firstName,
+        lastName: req.session.lastName,
+        address: req.session.address,
+        contactNumber: req.session.contactNumber
     });
 });
 
@@ -15,12 +19,6 @@ router.post('/', (req,res) => {
 })
 
 function updatingRecord(req,res){
-    var valid = true;
-    valid = checkField(req.body.firstName, valid);
-    valid = checkField(req.body.lastName, valid);
-    valid = checkField(req.body.address, valid);
-    valid = checkField(req.body.contactNumber, valid);
-
     // Account.update({"username": req.session.username}, 
     // {$set: {"firstName": req.body.firstName, 
     // "lastName": req.body.lastName, 
@@ -28,24 +26,25 @@ function updatingRecord(req,res){
     // "contactNumber": req.body.contactNumber}
     // });
 
-    if(valid == true){
-        console.log("All fields have been changed")
-    }
-    res.redirect('/profile');
+    Account.findOneAndUpdate({username: req.session.username}, req.body, {new: true}, (err, doc) => {
+        if(!err){
+            req.session.firstName = req.body.firstName;
+            req.session.lastName = req.body.lastName;
+            req.session.address = req.body.address;
+            req.session.contactNumber = req.body.contactNumber;
+            res.redirect('/profile');
+        }
+        else{
+            if(err.name == 'ValidationError'){
+                handleValidationError(err, req.body);
+                res.redner('editProfile');
+            }
+            else{
+                console.log("Error during record update: "+ err);
+            }
+        }
+    })
 }
 
-function checkField(field, val){
-    var valid = val;
-    var validSplit = valid.split(".")[2];
-
-    if(field.val() == ''){
-        vaild = false;
-    }else{
-        Account.update({"username": req.session.username},
-        {$set :{validSplit: field}})
-    }   
-
-    return valid;
-}
 
 module.exports = router;

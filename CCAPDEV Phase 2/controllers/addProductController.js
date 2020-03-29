@@ -45,14 +45,8 @@ router.post('/addComment', (req,res,next)=>{
         commentContent: req.body.commentText
     }
 
-    Product.findOneAndUpdate({"_id": productID}, {"comments": newComment}, function(err,result){
-        if(err){
-            res.send(err);
-        }
-        else{
-            console.log("Comment has been added!")
-        }
-    })
+    Product.update({"_id": productID}, 
+    {$set:{"comments": newComment}})
 
     res.redirect('/home')
 })

@@ -1,3 +1,18 @@
+// module.exports = function Comment(newComments){
+//     this.comments = newComments.items || {};
+//     this.username = newComments.username;
+//     this.commentContent = newComments.commentContent;
+
+//     this.add = function(username, commentContent, product, id){
+//         var commentArray = this.items[id];
+//         commentArray = 
+//     }
+
+// }
+
+
+
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
