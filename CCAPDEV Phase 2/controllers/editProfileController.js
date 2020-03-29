@@ -38,7 +38,7 @@ function checkField(field, val){
     var valid = val;
     var validSplit = valid.split(".")[2];
 
-    if(field.val() ==''){
+    if(field.val() == ''){
         vaild = false;
     }else{
         Account.update({"username": req.session.username},
