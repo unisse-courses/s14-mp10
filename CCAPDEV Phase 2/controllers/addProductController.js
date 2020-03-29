@@ -16,19 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    var product = new Product();
-    product.imagePath = `pictures/${req.body.picture}`;
-    product.title = req.body.productName;
-    product.price = req.body.price;
-    product.description = req.body.description;
-
-    console.log("THIS IS FILENAME" + product.imagePath); //Testing purposes
-
-    product.save((err, doc) => {
-        if(!err){
-            res.redirect('/home');
-        }
-    });
+    uploadProduct(req.res);
 });
 
 router.get('/addComment/:id', (req, res, next) => {
@@ -96,5 +84,28 @@ router.get('/removeAll', function(req,res,next){
     });
 
 });
+
+function uploadProduct(req,res){
+    var product = new Product();
+    product.imagePath = `pictures/${req.body.picture}`;
+    product.title = req.body.productName;
+    product.price = req.body.price;
+    product.description = req.body.description;
+
+    Product.findOne({title: req.body.productName}, function(err, item){
+        if(item){
+            res.render('addProduct',{
+                message: "Product already exists"
+            })
+        }
+        else{
+            product.save((err, doc) => {
+                if(!err){
+                    res.redirect('/home');
+                }
+            })
+        }
+    })
+}
 
 module.exports = router;

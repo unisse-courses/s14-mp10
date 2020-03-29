@@ -27,7 +27,6 @@ function insertRecord(req, res){
 
     Account.findOne({username: account.username}, function(err,user){
         if(user){
-            console.log("Username is already taken");
             res.render('register',{
                 message: "Username is already taken"
             });
