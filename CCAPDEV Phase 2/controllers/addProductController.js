@@ -40,19 +40,18 @@ router.get('/addComment/:id', (req, res, next) => {
 
 router.post('/addComment', (req,res,next)=>{
     var productID = req.params.id;
-    var username = req.session.username;
-    var commentText = req.body.commentText;
-
     var newComment = {
-        username: username,
-        commentContent
+        username: req.session.username,
+        commentContent: req.body.commentText
     }
 
-    Product.update({"_id": productID},
-    {
-    $set: {comments: {"_id": productID,
-    "accountName": req.session.username,
-    "commentText": req.body.commentText }}
+    Product.findOneAndUpdate({"_id": productID}, {"comments": newComment}, function(err,result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            console.log("Comment has been added!")
+        }
     })
 
     res.redirect('/home')

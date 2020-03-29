@@ -6,4 +6,4 @@ var commentSchema = new mongoose.Schema({
     commentContent: String
 });
 
-module.exports = mongoose.model('Comment', productSchema);
+module.exports = mongoose.model('Comment', commentSchema);
