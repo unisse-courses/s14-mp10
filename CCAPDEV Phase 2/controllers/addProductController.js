@@ -9,6 +9,7 @@ var Account = mongoose.model('Account');
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
+var Comment = require('../models/comments');
 
 router.get('/', (req, res) => {
     res.render('addProduct', {
@@ -49,29 +50,43 @@ router.post('/', (req, res) => {
 });
 
 router.get('/addComment/:id', (req, res, next) => {
-    res.render('addComment', {
-        username: req.session.username
+    Product.findById(req.params.id)
+    .exec(function (err, product){
+        if(err){
+            console.log("Error adding a comment to this specific product");
+        }
+        else{
+            res.render('addComment', {
+                _id: product._id,
+                username: req.session.username
+            })
+        }
     })
+    // res.render('addComment/:id', {
+    //     _id: product._id,
+    //     username: req.session.username
+    // })
 });
 
-router.post('/addComment', (req,res,next)=>{
+router.post('/addComment/:id', (req,res,next)=>{
     var productID = req.params.id;
+    var comment = new Comment();
+    comment.commentAccount = req.session.username;
+    comment.commentContent = req.body.commentText;
+    comment.commentProduct = productID;
 
-        Product.findOne({_id: productID}).then(function(record){
-            record.comments.push({username: req.session.username, commentContent: req.body.commentText});
-            record.save();
-        })
-
-    console.log(req.body.commentText);
-
-    res.redirect('/home')
+    comment.save((err,doc) => {
+        if(!err){
+            res.redirect('/home');
+        }
+    });
 })
 
 router.get('/add/:id', function(req,res,next){
     var productID = req.params.id;
     var cart = new Cart(req.session.cart ? req.session.cart: {});
 
-    Product.findById(productID, (err, product)=>{
+      Product.findById(productID, (err, product)=>{
         if(err)
         {
             return res.redirect('/');
