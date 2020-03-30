@@ -25,7 +25,7 @@ mongoose.connect('mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, us
 
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
+app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs', allowProtoMethodsByDefault: true}));
 app.set('view engine', '.hbs');
 
 

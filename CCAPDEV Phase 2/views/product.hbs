@@ -1,5 +1,4 @@
-<style>
-body{
+<style>body{
     background-color: #2c3e50;
 }
 
@@ -54,15 +53,17 @@ body{
     padding: 12px 16px; 
     font-size: 16px; 
     cursor: pointer; 
-  }
+}
+
+#itemContainer{
+    background-color: #333333;
+}
 
 #commentBtn{
     background-color: orange;
     font-size: 20px;
 }
-  
 </style>
-
 <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -89,18 +90,39 @@ body{
                         </div>
                         <br>
                         <h3 class="text-white">Comment Section: <a href="/addProduct/addComment/{{this._id}}" type="button" class="btn btn-primary" placeholder="Add A Comment" id="commentBtn"><i class="fa fa-plus"></i></a></h3>
-                        <ul class="list-group-item" id="itemContainer">
-                        {{#each comments}}
-                            <li class="list-group-item" id="itemContainer" style="border-color: white;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h7>{{this.commentAccount}}</h7>
-                                        <p>{{this.commentContent}}</p>
-                                    </div>  
+                        {{#if comments}}
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-md-offset-3 col-sm-offset-3">
+                                <ul class="list-group-item" id="itemContainer">
+                                    {{#each comments}}
+                                    <li class="list-group-item" id="itemContainer" style="border-color: white">
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-10">
+                                                <h6 style="color: white; text-align: center">{{this.commentAccount}}</h6>
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-12"> 
+                                                <h5 style="color: white;">{{this.commentContent}}</h5>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{else}}
+                        <br>
+                        <li class="list-group-item" id="itemContainer" style="border-color: white">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                                <div class="col-lg-10">
+                                    <h5 style="color: white;">No Comments Have Been Posted For This Product</h5>
                                 </div>
-                            </li>
-                        {{/each}}
-                    </ul> 
+                            <div class="col-lg-1"></div>
+                        </div>
+                        </li>
+                        {{/if}}
                     <br>
                     </div>
                     </form>

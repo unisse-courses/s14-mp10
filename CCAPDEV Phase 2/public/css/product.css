@@ -53,5 +53,14 @@ body{
     padding: 12px 16px; 
     font-size: 16px; 
     cursor: pointer; 
-  }
+}
+
+#itemContainer{
+    background-color: #333333;
+}
+
+#commentBtn{
+    background-color: orange;
+    font-size: 20px;
+}
   

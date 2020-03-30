@@ -23,5 +23,8 @@
     "nodemon": "^2.0.2",
     "react-modal": "^3.11.2"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "handlebars": "^4.5.0"
+  }
 }
