@@ -5,6 +5,7 @@ var Account = mongoose.model('Account');
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
+var Comment = require('../models/comments')
 
 //GET Home Page
 router.get('/', (req, res, next) => {
@@ -124,15 +125,43 @@ router.get('/shopping-cart', function(req,res,next){
 });
 
 router.get('/:id', (req,res,next) => {
-    Product.findById(req.params.id)
-    .exec(function (err, product) {
-        if (err) {
-            console.error('Error retrieving all product by id!');
-        } else {
-            res.render('product', {_id: product._id, imagePath: product.imagePath, title: product.title, description: product.description, price: product.price});
-        }
+
+    Product.findById(req.params.id).exec(function (err, product) {
+        Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
+            if (err) {
+                console.error('Error retrieving all product by id!');
+            } else {
+                // console.log(comment); //testing
+                res.render('product', 
+                    {_id: product._id, 
+                    imagePath: product.imagePath, 
+                    title: product.title, 
+                    description: product.description, 
+                    price: product.price,
+                    comments: comment
+                });
+            }
+        })
     })
 });
+
+// router.get('/', (req, res, next) => {
+//     Product.find(function(err, docs){
+//         var productChunks = [];
+//         var chunkSize = 3;
+//         for(var i=0; i<docs.length; i+= chunkSize)
+//         {
+//             productChunks.push(docs.slice(i, i+chunkSize));
+//         }
+//         res.render('home', {products: docs});
+//     });
+
+//     // Product.find(function(err, docs){
+//     //     for(var i=0; i<docs.length; i++)
+//     //     console.log("hello");
+//     //     res.render('home', {products: docs});
+//     // });
+// });
 
 
 

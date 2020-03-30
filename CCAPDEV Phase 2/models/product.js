@@ -6,8 +6,8 @@ var productSchema = new mongoose.Schema({
     title: {type:String, required: true},    
     description: {type:String, required: true},
     price: {type:Number, required: true},
-    // comments: [{username: String, commentContent: String}]
     comments: [{type: Object}]
+    // comments: [{username: String, commentContent: String}]
 });
 
 module.exports = mongoose.model('Product', productSchema);
