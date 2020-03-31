@@ -30,6 +30,19 @@ router.post('/', (req,res,next) => {
         if(err){
             console.error('Error retrieving all product by id!');
         }
+        else if(!product){
+            Product.find(function(err, docs){
+                var productChunks = [];
+                var chunkSize = 3;
+                for(var i = 0; i < docs.length; i+= chunkSize)
+                {
+                    productChunks.push(docs.slice(i, i+chunkSize));
+                }
+                res.render('home',{
+                    products: docs
+                })
+            })
+        }
         else{
             res.render('home', {
                 products: product
