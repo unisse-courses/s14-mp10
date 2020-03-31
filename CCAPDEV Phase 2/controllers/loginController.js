@@ -43,3 +43,24 @@ function loginRecord(req, res){
 }
 
 module.exports = router;
+
+router.get('/:id', (req,res,next) => {
+
+    Product.findById(req.params.id).exec(function (err, product) {
+        Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
+            if (err) {
+                console.error('Error retrieving all product by id!');
+            } else {
+                // console.log(comment); //testing
+                res.render('product', 
+                    {_id: product._id, 
+                    imagePath: product.imagePath, 
+                    title: product.title, 
+                    description: product.description, 
+                    price: product.price,
+                    comments: comment
+                });
+            }
+        })
+    })
+});

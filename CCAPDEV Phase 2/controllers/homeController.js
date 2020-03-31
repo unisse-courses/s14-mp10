@@ -18,19 +18,17 @@ router.get('/', (req, res, next) => {
         }
         res.render('home', {products: docs});
     });
-
-    // Product.find(function(err, docs){
-    //     for(var i=0; i<docs.length; i++)
-    //     console.log("hello");
-    //     res.render('home', {products: docs});
-    // });
 });
 
 router.get('/searchProduct', (req,res, next) => {
-    console.log("this is what is being searched " + req.body.searchField);
+    res.render('searchProduct');
+        
+});
+
+router.post('/', (req,res,next) => {
     Product.find({title: req.body.searchField}).exec(function (err, product){
         if(err){
-            console.error('Error retreiving all product by that name!');
+            console.error('Error retrieving all product by id!');
         }
         else{
             res.render('home', {
