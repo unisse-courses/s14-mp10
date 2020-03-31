@@ -12,7 +12,6 @@ router.get('/' ,(req,res) => {
     var space = ' ';
     var fullNameProfile = nFirst.concat(space, nLast);
     res.render('profile', {
-        fullName: fullNameProfile,
         firstName: nFirst,
         lastName: nLast,
         address: req.session.address,

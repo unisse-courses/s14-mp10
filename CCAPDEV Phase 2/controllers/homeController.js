@@ -26,6 +26,20 @@ router.get('/', (req, res, next) => {
     // });
 });
 
+router.get('/searchProduct', (req,res, next) => {
+    console.log("this is what is being searched " + req.body.searchField);
+    Product.find({title: req.body.searchField}).exec(function (err, product){
+        if(err){
+            console.error('Error retreiving all product by that name!');
+        }
+        else{
+            res.render('home', {
+                products: product
+            })
+        }
+    })
+})
+
 router.get('/checkout' ,(req,res) => {
     var nFirst = req.session.firstName;
     var nLast = req.session.lastName;
@@ -144,4 +158,7 @@ router.get('/:id', (req,res,next) => {
         })
     })
 });
+
+
+
 module.exports = router;

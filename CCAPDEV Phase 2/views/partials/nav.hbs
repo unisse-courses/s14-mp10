@@ -1,14 +1,19 @@
+<style>
+</style>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <a href="/home" class="navbar-brand">ShopHub</a>
         <button class="navbar-toggler navbar-dark" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav">
+            <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item"><a href="/profile" class="nav-link">Profile</a></li>
                 <li class="nav-item"><a href="/addProduct" class="nav-link">Add Product</a></li>
-                <li class="nav-item"><input class="nav-link form-control" type="text" name="" id="nav-search"></li>
-                <li class="nav-item"><button class="nav-link form-control" id="btnSearchItem">Search</button></li>
+                    <form action="/home/searchProduct">
+                        <li class="nav-item"><button class="nav-link form-control" id="btnSearchItem;">Search</button></li>
+                    </form>  
+            </ul>
+            <ul class="nav navbar-nav ml-auto">    
                 <li class="nav-item">
                     <a id="cart" href="/home/shopping-cart" class="nav-link">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart

@@ -65,34 +65,47 @@ router.get('/addComment/:id', (req, res, next) => {
 });
 
 router.get('/editComment/:id', (req, res, next) => {
-        Comment.findById(req.params.id).exec(function (err, comment){
+        Comment.findOne({_id: req.params.id, commentAccount: req.session.username}, function(err, commentUser){
             if(err){
-                console.log("Error adding a comment to this specific product");
+                console.log(err);
+                res.redirect('/home')
+            }
+            else if(!commentUser){
+                console.log("You cannot change that comment because it is not yours");
             }
             else{
-                res.render('editComment', {
-                    _id: comment._id,
-                    username: req.session.username
+                Comment.findById(req.params.id).exec(function (err, comment){
+                    if(err){
+                        console.log("Error adding a comment to this specific product");
+                    }
+                    else{
+                        res.render('editComment', {
+                            _id: comment._id,
+                            username: req.session.username
+                        })
+                    }
                 })
             }
-        })
+        })    
 });
 
 router.post('/editComment/:id', (req,res,next)=>{
-    Comment.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, doc) => {
-        if(!err){
-            res.redirect('/home')
-        }
-        else{
-            if(err.name == 'ValidationError'){
-                handleValidationError(err, req.body);
-                res.redner('editComment');
+
+        Comment.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, doc) => {
+            if(!err){
+                res.redirect('/home')
             }
             else{
-                console.log("Error during record update: "+ err);
+                if(err.name == 'ValidationError'){
+                    handleValidationError(err, req.body);
+                    res.redner('editComment');
+                }
+                else{
+                    console.log("Error during record update: "+ err);
+                }
             }
-        }
-    })
+        })
+    
 })
 
 router.post('/addComment/:id', (req,res,next)=>{
