@@ -74,10 +74,10 @@ h4{
 }
 
 #modal{
-    margin: 20px auto;
+    margin: 30px 30px;
 	display: block;
-	width: 50%;
-	padding: 8px;
+	width: 80%;
+	padding: 20px;
 }
 
 #modalButton{
@@ -163,19 +163,25 @@ h4{
 {{else}}
 {{/if}}
                     </form>
-                    <a href="/home/removeAll" type="button" class="btn btn-primary btn-block btn-lg" style="background-color: orange;" id="button">Checkout</a>
+                    <a href="#" type="button" class="btn btn-primary btn-block btn-lg" style="background-color: orange;" id="button">Checkout</a>
+                    <div class="bg-modal">
+                        <div class="modal-contents">
+                            <h5 style="color: white;" id="modal">Thank you for your purchase</h5>
+                            <a href="/home/removeAll" type="button" class="btn btn-primary btn-block btn-lg" id="modalButton">Proceed</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
     <!-- Modal Section-->
-    <div class="bg-modal">
+{{!-- <div class="bg-modal">
 	<div class="modal-contents">
 			<h5 style="color: white;" id="modal">Thank you for your purchase</h5>
 			<a href="/home" type="button" class="btn btn-primary btn-block btn-lg" id="modalButton">Checkout</a>
 
 	</div>
-</div>
+</div> --}}
 
     <script>
         document.getElementById('button').addEventListener("click", function() {

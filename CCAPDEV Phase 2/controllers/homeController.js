@@ -139,6 +139,26 @@ router.get('/removeAll', function(req,res,next){
 
 });
 
+router.get('/removeAllModal', function(req,res,next){
+    var cart = new Cart(req.session.cart);
+
+    var order = new Order({
+        userID: req.session.id,
+        username: req.session.username,
+        cart: req.session.cart,
+        address: req.session.address,
+        contact: req.session.contactNumber
+    });
+
+    order.save((err, doc) => {
+        if(!err){
+            cart.removeAll();
+            req.session.cart = cart;
+        }
+    });
+
+});
+
 router.get('/shopping-cart', function(req,res,next){
     if(!req.session.cart)
     {
