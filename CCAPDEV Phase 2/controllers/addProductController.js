@@ -164,6 +164,15 @@ router.get('/reduce/:id', function(req,res,next){
     res.redirect('/home/checkout');
 });
 
+router.get('/remove/:id', function(req,res,next){
+    var productID = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart: {});
+
+    cart.removeItem(productID);
+    req.session.cart = cart;
+    res.redirect('/home');
+});
+
 router.get('/removeAll', function(req,res,next){
     var cart = new Cart(req.session.cart);
 
