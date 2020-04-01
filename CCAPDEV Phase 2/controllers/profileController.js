@@ -9,8 +9,6 @@ const Account = mongoose.model('Account');
 router.get('/' ,(req,res) => {
     var nFirst = req.session.firstName;
     var nLast = req.session.lastName;
-    var space = ' ';
-    var fullNameProfile = nFirst.concat(space, nLast);
     res.render('profile', {
         firstName: nFirst,
         lastName: nLast,

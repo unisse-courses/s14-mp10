@@ -151,18 +151,17 @@ router.get('/shopping-cart', function(req,res,next){
 
 router.get('/:id', (req,res,next) => {
 
-    Product.findById(req.params.id).exec(function (err, product) {
+    Product.findById(req.params.id).exec(function (err, item) {
         Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
             if (err) {
                 console.error('Error retrieving all product by id!');
             } else {
-                // console.log(comment); //testing
                 res.render('product', 
-                    {_id: product._id, 
-                    imagePath: product.imagePath, 
-                    title: product.title, 
-                    description: product.description, 
-                    price: product.price,
+                    {_id: item._id, 
+                    imagePath: item.imagePath, 
+                    title: item.title, 
+                    description: item.description, 
+                    price: item.price,
                     comments: comment
                 });
             }

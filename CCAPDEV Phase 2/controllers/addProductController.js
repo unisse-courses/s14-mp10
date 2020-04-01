@@ -81,7 +81,8 @@ router.get('/editComment/:id', (req, res, next) => {
                     else{
                         res.render('editComment', {
                             _id: comment._id,
-                            username: req.session.username
+                            username: req.session.username,
+                            commentContent: comment.commentContent
                         })
                     }
                 })
@@ -90,22 +91,22 @@ router.get('/editComment/:id', (req, res, next) => {
 });
 
 router.post('/editComment/:id', (req,res,next)=>{
-
-        Comment.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, doc) => {
-            if(!err){
-                res.redirect('/home')
-            }
-            else{
-                if(err.name == 'ValidationError'){
-                    handleValidationError(err, req.body);
-                    res.redner('editComment');
+            Comment.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, doc) => {
+                if(!err){
+                    res.redirect('/home')
                 }
                 else{
-                    console.log("Error during record update: "+ err);
+                    if(err.name == 'ValidationError'){
+                        handleValidationError(err, req.body);
+                        res.redner('editComment',{
+                            commentContent: comment.commentContent
+                        });
+                    }
+                    else{
+                        console.log("Error during record update: "+ err);
+                    }
                 }
-            }
-        })
-    
+            })
 })
 
 router.post('/addComment/:id', (req,res,next)=>{
