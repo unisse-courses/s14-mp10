@@ -69,13 +69,19 @@ body{
     background-color: orange;
     font-size: 10px;
 }
+
+.productPicture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
 <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div id="ui">
                     <h1 class="text-white">{{title}}</h1>
-                    <img src="{{imagePath}}" height="400" alt="">
+                    <img src="/{{imagePath}}" width="300px" height="300px" alt="product picture" class="productPicture">
                     <form class="form-group text-center">
                         <br>
                         <div class="row">
