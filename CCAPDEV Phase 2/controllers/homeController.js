@@ -169,6 +169,56 @@ router.get('/shopping-cart', function(req,res,next){
 
 });
 
+router.post('/thumbsUp/:id', (req,res,next)=>{
+    Product.updateOne({_id: req.params.id}, {$inc: {thumbsUp: 1}}).exec(function(err, docs){
+        Product.findById(req.params.id).exec(function (err, item) {
+            Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
+                Product.findOneAndUpdate({_id: req.params.id}, {$inc : {'product.thumbsUp' : 1}}, {new: true}, (err, doc) => {
+                    if (err) {
+                        console.error('Error retrieving all product by id!');
+                    } else {
+                        res.render('product', 
+                            {_id: item._id, 
+                            imagePath: item.imagePath, 
+                            title: item.title, 
+                            description: item.description, 
+                            price: item.price,
+                            thumbsUp: item.thumbsUp,
+                            thumbsDown: item.thumbsDown,
+                            comments: comment
+                        });
+                    }
+                })
+            })
+        })
+    })
+})
+
+router.post('/thumbsDown/:id', (req,res,next)=>{
+    Product.updateOne({_id: req.params.id}, {$inc: {thumbsDown: 1}}).exec(function(err, docs){
+        Product.findById(req.params.id).exec(function (err, item) {
+            Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
+                Product.findOneAndUpdate({_id: req.params.id}, {$inc : {'product.thumbsUp' : 1}}, {new: true}, (err, doc) => {
+                    if (err) {
+                        console.error('Error retrieving all product by id!');
+                    } else {
+                        res.render('product', 
+                            {_id: item._id, 
+                            imagePath: item.imagePath, 
+                            title: item.title, 
+                            description: item.description, 
+                            price: item.price,
+                            thumbsUp: item.thumbsUp,
+                            thumbsDown: item.thumbsDown,
+                            comments: comment
+                        });
+                    }
+                })
+            })
+        })
+    })
+})
+
 router.get('/:id', (req,res,next) => {
 
     Product.findById(req.params.id).exec(function (err, item) {
@@ -182,6 +232,8 @@ router.get('/:id', (req,res,next) => {
                     title: item.title, 
                     description: item.description, 
                     price: item.price,
+                    thumbsUp: item.thumbsUp,
+                    thumbsDown: item.thumbsDown,
                     comments: comment
                 });
             }

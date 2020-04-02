@@ -82,6 +82,14 @@ body{
                 <div id="ui">
                     <h1 class="text-white">{{title}}</h1>
                     <img src="/{{imagePath}}" width="300px" height="300px" alt="product picture" class="productPicture">
+                    <form method="POST" action="/home/thumbsUp/{{_id}}">
+                    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                    <button type="submit" name="submit_param" value="submit_value" class="btn btn-secondary"><span class="fa fa-thumbs-up"></span>({{thumbsUp}})</button>
+                    </form>
+                    <form method="POST" action="/home/thumbsDown/{{_id}}">
+                    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                    <button type="submit"  name="submit_param" value="submit_value" class="btn btn-secondary"><span class="fa fa-thumbs-down"></span>({{thumbsDown}})</button>
+                    </form>
                     <form class="form-group text-center">
                         <br>
                         <div class="row">

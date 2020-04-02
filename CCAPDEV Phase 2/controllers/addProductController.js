@@ -98,7 +98,7 @@ router.post('/editComment/:id', (req,res,next)=>{
                 else{
                     if(err.name == 'ValidationError'){
                         handleValidationError(err, req.body);
-                        res.redner('editComment',{
+                        res.render('editComment',{
                             commentContent: comment.commentContent
                         });
                     }
