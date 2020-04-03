@@ -78,6 +78,10 @@ router.post('/addComment/:id', (req,res,next)=>{
                     if (err) {
                         console.error('Error retrieving all product by id!');
                     } else {
+                        var commentObjects = [];
+                        comment.forEach(function(doc){
+                            commentObjects.push(doc.toObject());
+                        })
                         // console.log(comment); //testing
                         res.render('product', 
                             {_id: product._id, 
@@ -85,7 +89,7 @@ router.post('/addComment/:id', (req,res,next)=>{
                             title: product.title, 
                             description: product.description, 
                             price: product.price,
-                            comments: comment
+                            comments: commentObjects
                         });
                     }
                 })
