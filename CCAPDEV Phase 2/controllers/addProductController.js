@@ -64,6 +64,36 @@ router.get('/addComment/:id', (req, res, next) => {
     })
 });
 
+router.post('/addComment/:id', (req,res,next)=>{
+    var productID = req.params.id;
+    var comment = new Comment();
+    comment.commentAccount = req.session.username;
+    comment.commentContent = req.body.commentText;
+    comment.commentProduct = productID;
+
+    comment.save((err,doc) => {
+        if(!err){
+            Product.findById(req.params.id).exec(function (err, product) {
+                Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
+                    if (err) {
+                        console.error('Error retrieving all product by id!');
+                    } else {
+                        // console.log(comment); //testing
+                        res.render('product', 
+                            {_id: product._id, 
+                            imagePath: product.imagePath, 
+                            title: product.title, 
+                            description: product.description, 
+                            price: product.price,
+                            comments: comment
+                        });
+                    }
+                })
+            })
+        }
+    });
+})
+
 router.get('/editComment/:id', (req, res, next) => {
         Comment.findOne({_id: req.params.id, commentAccount: req.session.username}, function(err, commentUser){
             if(err){
@@ -107,36 +137,6 @@ router.post('/editComment/:id', (req,res,next)=>{
                     }
                 }
             })
-})
-
-router.post('/addComment/:id', (req,res,next)=>{
-    var productID = req.params.id;
-    var comment = new Comment();
-    comment.commentAccount = req.session.username;
-    comment.commentContent = req.body.commentText;
-    comment.commentProduct = productID;
-
-    comment.save((err,doc) => {
-        if(!err){
-            Product.findById(req.params.id).exec(function (err, product) {
-                Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
-                    if (err) {
-                        console.error('Error retrieving all product by id!');
-                    } else {
-                        // console.log(comment); //testing
-                        res.render('product', 
-                            {_id: product._id, 
-                            imagePath: product.imagePath, 
-                            title: product.title, 
-                            description: product.description, 
-                            price: product.price,
-                            comments: comment
-                        });
-                    }
-                })
-            })
-        }
-    });
 })
 
 router.get('/add/:id', function(req,res,next){

@@ -226,6 +226,10 @@ router.get('/:id', (req,res,next) => {
             if (err) {
                 console.error('Error retrieving all product by id!');
             } else {
+                var commentObjects = [];
+                comment.forEach(function(doc){
+                    commentObjects.push(doc.toObject());
+                })
                 res.render('product', 
                     {_id: item._id, 
                     imagePath: item.imagePath, 
@@ -234,25 +238,11 @@ router.get('/:id', (req,res,next) => {
                     price: item.price,
                     thumbsUp: item.thumbsUp,
                     thumbsDown: item.thumbsDown,
-                    comments: comment
+                    comments: commentObjects
                 });
             }
         })
     })
 });
-
-// router.get('/', (req, res, next) => {
-//     Product.find(function(err, docs){
-//         var productChunks = [];
-//         var chunkSize = 3;
-//         for(var i=0; i<docs.length; i+= chunkSize)
-//         {
-//             productChunks.push(docs.slice(i, i+chunkSize));
-//         }
-//         res.render('home', {products: docs});
-//     });
-// });
-
-
 
 module.exports = router;
