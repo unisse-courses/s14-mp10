@@ -4,6 +4,7 @@ var exphbs = require('express-handlebars');
 var bodyparser = require('body-parser');
 var session = require('express-session');
 var accounts = require('./models/account.model');
+var flash = require('express-flash');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var MongoStore = require('connect-mongo')(session);
@@ -47,6 +48,8 @@ app.use(cookieParser());
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         cookie: {maxAge: 180*60*100}
     }));
+
+app.use(flash());
 
 app.get('/', function(req,res,next){ 
     console.log(req.session.username); //For testing purposes

@@ -1,6 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
+const flash = require('express-flash');
 var Account = mongoose.model('Account');
 var Product = require('../models/product');
 var Cart = require('../models/cart');
@@ -52,13 +53,10 @@ router.post('/', (req,res,next) => {
 })
 
 router.get('/checkout' ,(req,res) => {
-    var nFirst = req.session.firstName;
-    var nLast = req.session.lastName;
-    var space = ' ';
-    var fullNameProfile = nFirst.concat(space, nLast);
     var cart = new Cart(req.session.cart ? req.session.cart: {});
     res.render('checkout1', {
-        fullName: fullNameProfile,
+        firstName: req.session.firstName,
+        lastName: req.session.lastName,
         address: req.session.address,
         contactNumber: req.session.contactNumber,
         products: cart.generateArray(), 
@@ -119,7 +117,6 @@ router.get('/remove/:id', function(req,res,next){
 
 router.get('/removeAll', function(req,res,next){
     var cart = new Cart(req.session.cart);
-
     var order = new Order({
         userID: req.session.id,
         username: req.session.username,
@@ -128,35 +125,29 @@ router.get('/removeAll', function(req,res,next){
         contact: req.session.contactNumber
     });
 
-    order.save((err, doc) => {
-        if(!err){
-            cart.removeAll();
-            req.session.cart = cart;
-            res.redirect('/home');
-            console.log(order);
-        }
-    });
-
-});
-
-router.get('/removeAllModal', function(req,res,next){
-    var cart = new Cart(req.session.cart);
-
-    var order = new Order({
-        userID: req.session.id,
-        username: req.session.username,
-        cart: req.session.cart,
+    console.log(req.body.creditCard)
+    
+    if(req.body.creditCard == undefined ||  req.body.date == undefined || req.body.cvv == undefined ){
+        res.render('checkout1', {
+        firstName: req.session.firstName,
+        lastName: req.session.lastName,
         address: req.session.address,
-        contact: req.session.contactNumber
+        contactNumber: req.session.contactNumber,
+        products: cart.generateArray(),
+        message: "Please input all necessary data", 
+        totalPrice: cart.totalPrice
     });
-
-    order.save((err, doc) => {
-        if(!err){
-            cart.removeAll();
-            req.session.cart = cart;
-        }
-    });
-
+    }
+    else{
+        order.save((err, doc) => {
+            if(!err){
+                cart.removeAll();
+                req.session.cart = cart;
+                res.redirect('/home');
+                console.log(order);
+            }
+        });
+    }    
 });
 
 router.get('/shopping-cart', function(req,res,next){
