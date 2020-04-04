@@ -138,6 +138,7 @@ router.get('/removeAll', function(req,res,next){
 
 router.post('/removeAllCheckout', function (req,res,next){
     var cart = new Cart(req.session.cart);
+    var cardLength = req.body.creditCard.length;
     var order = new Order({
         userID: req.session.id,
         username: req.session.username,
@@ -155,10 +156,22 @@ router.post('/removeAllCheckout', function (req,res,next){
         address: req.session.address,
         contactNumber: req.session.contactNumber,
         products: cart.generateArray(),
-        message: "Please input all necessary data", 
+        message: "Please correctly input all necessary data", 
         totalPrice: cart.totalPrice
     })
-    }else{
+    }
+    else if(req.body.creditCard.length != 12|| req.body.cvv.length != 3){
+        res.render('checkout1', {
+            firstName: req.session.firstName,
+            lastName: req.session.lastName,
+            address: req.session.address,
+            contactNumber: req.session.contactNumber,
+            products: cart.generateArray(),
+            message: "Please complete all necessary number of digits", 
+            totalPrice: cart.totalPrice
+        })
+    }
+    else{
         order.save((err, doc) => {
             if(!err){
                 cart.removeAll();
