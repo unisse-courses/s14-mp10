@@ -125,9 +125,30 @@ router.get('/removeAll', function(req,res,next){
         contact: req.session.contactNumber
     });
 
+        order.save((err, doc) => {
+            if(!err){
+                cart.removeAll();
+                req.session.cart = cart;
+                res.redirect('/home');
+                console.log(order);
+            }
+        });
+      
+});
+
+router.post('/removeAllCheckout', function (req,res,next){
+    var cart = new Cart(req.session.cart);
+    var order = new Order({
+        userID: req.session.id,
+        username: req.session.username,
+        cart: req.session.cart,
+        address: req.session.address,
+        contact: req.session.contactNumber
+    });
+
     console.log(req.body.creditCard)
     
-    if(req.body.creditCard == undefined ||  req.body.date == undefined || req.body.cvv == undefined ){
+    if(req.body.creditCard == '' || req.body.cvv == '' ){
         res.render('checkout1', {
         firstName: req.session.firstName,
         lastName: req.session.lastName,
@@ -136,9 +157,8 @@ router.get('/removeAll', function(req,res,next){
         products: cart.generateArray(),
         message: "Please input all necessary data", 
         totalPrice: cart.totalPrice
-    });
-    }
-    else{
+    })
+    }else{
         order.save((err, doc) => {
             if(!err){
                 cart.removeAll();
@@ -148,7 +168,7 @@ router.get('/removeAll', function(req,res,next){
             }
         });
     }    
-});
+})
 
 router.get('/shopping-cart', function(req,res,next){
     if(!req.session.cart)

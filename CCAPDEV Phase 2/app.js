@@ -49,8 +49,6 @@ app.use(cookieParser());
         cookie: {maxAge: 180*60*100}
     }));
 
-app.use(flash());
-
 app.get('/', function(req,res,next){ 
     console.log(req.session.username); //For testing purposes
     res.render('welcome',{
