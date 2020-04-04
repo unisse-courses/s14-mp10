@@ -17,9 +17,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if(req.body.productName === ' '){
+    if(req.body.productName == '' || req.body.picture == '' || req.body.price == '' || req.body.description == ''){
         res.render('addProduct',{
-            message: "No information was given about the product"
+            message: "Please complete the necessary information for the product"
         })
     }
 
