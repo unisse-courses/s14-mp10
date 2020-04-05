@@ -15,7 +15,7 @@
 * Once you have an account and are in the home screen where the products are shown, you can use the navigation bar to check your own profile (and edit details), add a product, search for a product, Shopping Cart, and Logout
 * When in the profile view you can see you can edit some of the details you entered when you registered into the application, but if you do not want to edit all fields, the ones you did not change will still remain the same
 * When adding a product you have to enter all the fields such as the name, price, description, and adding one picture for the product to be properly processed and entered into the database
-* When searching this too is case sensitive and you need to search the exact words of the product you want to see and for it to appear as a lone product in the home page (example for Black Shirt you have to type Black Shirt in the search view)
+* When searching this too is case sensitive and you need to search the exact words of the product you want to see and for it to appear as a lone product in the home page (example for Black Hoodie you have to type Black Hoodie in the search view)
 * The shopping cart view will show you all the products you have added to your cart to show all the products you wish to checkout, which the button is at the bottom of the screen to bring you to a view to finalize your order
 * The logout just ends the session of your account so you can register/login if you please
 
