@@ -21,8 +21,8 @@ var addProductController = require('./controllers/addProductController');
 var mongoose = require('mongoose');
 
 var app = express();
-
-mongoose.connect('mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, useUnifiedTopology: true});
+mongodb+srv://databaseUser:coronavirus@cluster0-mquaf.mongodb.net/test?retryWrites=true&w=majority
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
@@ -66,9 +66,9 @@ app.use(function(req,res,next){
     next();
 });
 
-app.listen(app.get('port'), function(){
-  console.log('server started on port ' + app.get('port'));
-});
+// app.listen(app.get('port'), function(){
+//   console.log('server started on port ' + app.get('port'));
+// });
 
 app.use('/home', homeController);
 app.use('/register', registerController);
