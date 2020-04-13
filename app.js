@@ -66,9 +66,9 @@ app.use(function(req,res,next){
     next();
 });
 
-// app.listen(app.get('port'), function(){
-//   console.log('server started on port ' + app.get('port'));
-// });
+app.listen(app.get('port'), function(){
+  console.log('server started on port ' + app.get('port'));
+});
 
 app.use('/home', homeController);
 app.use('/register', registerController);
