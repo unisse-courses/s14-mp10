@@ -42,7 +42,7 @@ app.use(cookieParser());
  app.use(
     session({
         secret:'ssshhh', 
-        name: 'ShopHub',
+        name: 'heroku_vd7j4qtz',
         saveUninitialized: true, 
         resave: true,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
