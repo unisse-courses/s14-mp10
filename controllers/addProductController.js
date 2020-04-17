@@ -2,7 +2,6 @@ const express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
-const multer = require('multer');
 const session = require('express-session');
 const cookikie = require('cookie-parser');
 var Account = mongoose.model('Account');
@@ -11,12 +10,36 @@ var Cart = require('../models/cart');
 var Order = require('../models/order');
 var Comment = require('../models/comments');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, './pictures/')
+    },
+    filename: function(req,file, cb){
+        cb(null, file.originalname);
+    }
+})
+const fileFilter = (req,file, cb) => {
+    if(file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' ||file.mimetype === 'image/png'){
+        cb(null,true);
+    }
+    else{
+        cb(null,false);
+    }
+}
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileFilter: fileFilter
+    }
+})
+
 router.get('/', (req, res) => {
     res.render('addProduct', {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/',upload.single('productImage') ,(req, res) => {
     if(req.body.productName == '' || req.body.picture == '' || req.body.price == '' || req.body.description == ''){
         res.render('addProduct',{
             message: "Please complete the necessary information for the product"
@@ -36,7 +59,8 @@ router.post('/', (req, res) => {
         }
         else{
             var product = new Product();
-            product.imagePath = `pictures/${req.body.picture}`;
+            // product.imagePath = `pictures/${req.body.picture}`;
+            product.imagePath = req.file.path;
             product.title = req.body.productName;
             product.price = req.body.price;
             product.description = req.body.description;
