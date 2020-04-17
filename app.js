@@ -25,7 +25,7 @@ const options = {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
     useFindAndModify: false
-};
+}
 const databaseURL = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
 mongoose.connect(databaseURL, options);
 
