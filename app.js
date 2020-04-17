@@ -21,8 +21,13 @@ var addProductController = require('./controllers/addProductController');
 var mongoose = require('mongoose');
 
 var app = express();
-mongodb+srv://databaseUser:coronavirus@cluster0-mquaf.mongodb.net/test?retryWrites=true&w=majority
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ShopHub', {useNewUrlParser: true, useUnifiedTopology: true});
+const options = {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}
+const databaseURL = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
+mongoose.connect(options, databaseURL);
 
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
