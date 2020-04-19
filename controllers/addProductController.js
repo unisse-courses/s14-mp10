@@ -11,36 +11,46 @@ var Order = require('../models/order');
 var Comment = require('../models/comments');
 
 const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, './pictures/')
-    },
-    filename: function(req,file, cb){
-        cb(null, file.originalname);
-    }
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+
+const databaseURL = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
+const conn = mongoose.createConnection(databaseURL);
+let gfs;
+
+conn.once('open', () => {
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('uploads');
 })
-const fileFilter = (req,file, cb) => {
-    if(file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' ||file.mimetype === 'image/png'){
-        cb(null,true);
+
+const storage = new GridFsStorage({
+    url: databaseURL,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
     }
-    else{
-        cb(null,false);
-    }
-}
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileFilter: fileFilter
-    }
-})
+  });
+  const upload = multer({ storage });
 
 router.get('/', (req, res) => {
     res.render('addProduct', {
     });
 });
 
-router.post('/',upload.single('productImage') ,(req, res) => {
-    if(req.body.productName == '' || req.body.picture == '' || req.body.price == '' || req.body.description == ''){
+router.post('/', upload.single('picture') ,(req, res) => {
+    console.log(req.file)
+    if(req.body.productName == '' || req.body.price == '' || req.body.description == ''){
         res.render('addProduct',{
             message: "Please complete the necessary information for the product"
         })
@@ -59,8 +69,7 @@ router.post('/',upload.single('productImage') ,(req, res) => {
         }
         else{
             var product = new Product();
-            // product.imagePath = `pictures/${req.body.picture}`;
-            product.imagePath = req.file.path;
+            // product.imagePath = `pictures/${req.file.filename}`;
             product.title = req.body.productName;
             product.price = req.body.price;
             product.description = req.body.description;
