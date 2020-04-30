@@ -10,12 +10,13 @@ var Cart = require('../models/cart');
 var Order = require('../models/order');
 var Comment = require('../models/comments');
 
+//All The Multer stuff
+const crypto = require('crypto');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-
-const databaseURL = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
-const conn = mongoose.createConnection(databaseURL);
+const mongoURI = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
+const conn = mongoose.createConnection(mongoURI);
 let gfs;
 
 conn.once('open', () => {
@@ -24,7 +25,7 @@ conn.once('open', () => {
 })
 
 const storage = new GridFsStorage({
-    url: databaseURL,
+    url: mongoURI,
     file: (req, file) => {
       return new Promise((resolve, reject) => {
         crypto.randomBytes(16, (err, buf) => {
@@ -48,7 +49,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', upload.single('picture') ,(req, res) => {
+router.post('/', upload.single('file') ,(req, res) => {
     console.log(req.file)
     if(req.body.productName == '' || req.body.price == '' || req.body.description == ''){
         res.render('addProduct',{
@@ -69,7 +70,7 @@ router.post('/', upload.single('picture') ,(req, res) => {
         }
         else{
             var product = new Product();
-            // product.imagePath = `pictures/${req.file.filename}`;
+            product.imagePath = req.file.filename;
             product.title = req.body.productName;
             product.price = req.body.price;
             product.description = req.body.description;

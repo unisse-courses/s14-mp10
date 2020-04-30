@@ -8,6 +8,42 @@ var Cart = require('../models/cart');
 var Order = require('../models/order');
 var Comment = require('../models/comments')
 
+//All The Multer stuff
+const crypto = require('crypto');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoURI = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
+const conn = mongoose.createConnection(mongoURI);
+let gfs;
+
+conn.once('open', () => {
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('uploads');
+})
+
+const storage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
+    }
+  });
+  const upload = multer({ storage });
+
+
+
 //GET Home Page
 router.get('/', (req, res, next) => {
     Product.find(function(err, docs){
@@ -17,13 +53,34 @@ router.get('/', (req, res, next) => {
         {
             productChunks.push(docs.slice(i, i+chunkSize));
         }
-        res.render('home', {products: docs});
+        gfs.files.find(docs.imagePath).toArray((err,files) => {
+            console.log(files);
+            res.render('home', {
+                products: docs,
+                imagePath: files
+            });
+        })
     });
 });
 
+// router.get('/', (req,res) => {
+//     Product.find(function(err, docs){
+//         var productChunks = [];
+//         var chunkSize = 3;
+//         for(var i=0; i<docs.length; i+= chunkSize)
+//         {
+//             productChunks.push(docs.slice(i, i+chunkSize));
+//         }
+//         gfs.files.find().toArray((err,files) => {
+//         })
+//         res.render('home', {products: docs});
+//     });
+//     gfs.files.find().toArray((err,files) => {
+//     })
+// })
+
 router.get('/searchProduct', (req,res, next) => {
     res.render('searchProduct');
-        
 });
 
 router.post('/', (req,res,next) => {
