@@ -2,7 +2,9 @@ const express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 const flash = require('express-flash');
+var mongodb = require('mongodb');
 var Account = mongoose.model('Account');
+var mongo
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
@@ -14,12 +16,18 @@ const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoURI = 'mongodb+srv://databaseUser:coronavirus@shophub-mquaf.mongodb.net/ShopHub?retryWrites=true&w=majority';
-const conn = mongoose.createConnection(mongoURI);
-let gfs;
+const conn = mongoose.createConnection(mongoURI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
+let gfs;
 conn.once('open', () => {
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('uploads');
+    // gfs = Grid(conn.db, mongoose.mongo);
+    // gfs.collection('uploads');
+    gfs = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: "uploads"
+      });
 })
 
 const storage = new GridFsStorage({
@@ -30,54 +38,70 @@ const storage = new GridFsStorage({
           if (err) {
             return reject(err);
           }
-          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const filename = buf.toString("hex") + path.extname(file.originalname);
           const fileInfo = {
             filename: filename,
-            bucketName: 'uploads'
+            bucketName: "uploads"
           };
           resolve(fileInfo);
         });
       });
     }
   });
-  const upload = multer({ storage });
+  
+  const upload = multer({
+    storage
+  });
 
 
-
-//GET Home Page
-router.get('/', (req, res, next) => {
-    Product.find(function(err, docs){
-        var productChunks = [];
-        var chunkSize = 3;
-        for(var i=0; i<docs.length; i+= chunkSize)
-        {
-            productChunks.push(docs.slice(i, i+chunkSize));
-        }
-        gfs.files.find(docs.imagePath).toArray((err,files) => {
-            console.log(files);
-            res.render('home', {
-                products: docs,
-                imagePath: files
-            });
-        })
+router.get("/", (req, res, next) => {
+    if(!gfs) {
+      console.log("some error occured, check connection to db");
+      res.send("some error occured, check connection to db");
+      process.exit(0);
+    }
+    gfs.find().toArray((err, files) => {
+      if (!files || files.length === 0) {
+        console.log('FIRST')
+        return res.render("home", {
+          files: false
+        });
+      } else {
+        console.log('SECOND')
+        const f = files
+          .map(file => {
+            if (
+              file.contentType === "image/png" ||
+              file.contentType === "image/jpeg" || 
+              file.contentType === "image/jpg"
+            ) {
+              file.isImage = true;
+            } else {
+              file.isImage = false;
+            }
+            return file;
+          })
+          .sort((a,b) => {
+              return(
+                  new Date(b["uploadDate"]).getTime() -
+                  new Date(a["uploadDate"]).getTime()
+              );
+          });
+        Product.find(function(err,docs){
+            console.log('THIRD')
+            var productChunks = [];
+            var chunkSize = 3;
+            for(var i = 0; i<docs.length;i+=chunkSize){
+                productChunks.push(docs.slice(i, i+chunkSize))
+            }
+        return res.render("home", {
+            products: docs,
+            files: f
+        });
+    })
+    }
     });
-});
-
-// router.get('/', (req,res) => {
-//     Product.find(function(err, docs){
-//         var productChunks = [];
-//         var chunkSize = 3;
-//         for(var i=0; i<docs.length; i+= chunkSize)
-//         {
-//             productChunks.push(docs.slice(i, i+chunkSize));
-//         }
-//         gfs.files.find().toArray((err,files) => {
-//         })
-//         res.render('home', {products: docs});
-//     });
-//     gfs.files.find().toArray((err,files) => {
-//     })
-// })
+  });
 
 router.get('/searchProduct', (req,res, next) => {
     res.render('searchProduct');
