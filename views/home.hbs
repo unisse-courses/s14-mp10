@@ -6,9 +6,8 @@
     {{#each products}}
             <div class="col-md-3">
                 {{#each this}}
-                    {{#if files}}
-                    <img src="home/image/{{file.filename}}" height="200px" width="250px" alt="">
-                    {{!-- <img src="image/{{file.filename}}" height="200px" width="250px" alt=""> --}}
+                    {{#if this.imagePath}}
+                    <img src="{{this.imagePath}}" height="200px" width="250px" alt="">
                     <a href="/home/{{this._id}}" type="button" class="btn btn-secondary" title="View Product"><i class="fa fa-eye"></i></a>
                     <a href="/home/add-to-cart/{{this._id}}" type="button" class="btn btn-secondary" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
                     <h3>{{this.title}}</h3>

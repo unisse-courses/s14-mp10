@@ -70,7 +70,7 @@ router.post('/', upload.single('file') ,(req, res) => {
         }
         else{
             var product = new Product();
-            product.imagePath = req.file.filename;
+            product.imagePath = req.body.url;
             product.title = req.body.productName;
             product.price = req.body.price;
             product.description = req.body.description;
