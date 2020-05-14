@@ -74,6 +74,8 @@ router.post('/', upload.single('file') ,(req, res) => {
             product.title = req.body.productName;
             product.price = req.body.price;
             product.description = req.body.description;
+            product.thumbsUp = 0;
+            product.thumbsDown = 0;
             product.save((err, doc) => {
                 if(!err){
                     res.redirect('/home');
