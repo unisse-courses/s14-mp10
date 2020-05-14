@@ -53,55 +53,52 @@ const storage = new GridFsStorage({
     storage
   });
 
-
-router.get("/", (req, res, next) => {
-    if(!gfs) {
-      console.log("some error occured, check connection to db");
-      res.send("some error occured, check connection to db");
-      process.exit(0);
-    }
-    gfs.find().toArray((err, files) => {
-      if (!files || files.length === 0) {
-        console.log('FIRST')
-        return res.render("home", {
-          files: false
-        });
-      } else {
-        console.log('SECOND')
-        const f = files
-          .map(file => {
-            if (
-              file.contentType === "image/png" ||
-              file.contentType === "image/jpeg" || 
-              file.contentType === "image/jpg"
-            ) {
-              file.isImage = true;
-            } else {
-              file.isImage = false;
-            }
-            return file;
-          })
-          .sort((a,b) => {
-              return(
-                  new Date(b["uploadDate"]).getTime() -
-                  new Date(a["uploadDate"]).getTime()
-              );
-          });
-        Product.find(function(err,docs){
-            console.log('THIRD')
-            var productChunks = [];
-            var chunkSize = 3;
-            for(var i = 0; i<docs.length;i+=chunkSize){
-                productChunks.push(docs.slice(i, i+chunkSize))
-            }
-        return res.render("home", {
-            products: docs,
-            files: f
-        });
-    })
-    }
-    });
-  });
+  router.get("/", (req,res, next) => {
+      Product.find(function(err, docs){
+          var productChunks = [];
+          var chunkSize = 3;
+          for(var i = 0; i<docs.length;i+=chunkSize){
+              productChunks.push(docs.slice(i, i+chunkSize))
+              if(!gfs){
+                console.log("some error occured, check connection to db");
+                res.send("some error occured, check connection to db");
+                process.exit(0);
+              }
+              gfs.find({filename: docs.imagePath}).toArray((err, files) => {
+                  if(!files || files.length === 0){
+                      return res.render("home",{
+                          files: false
+                      })
+                  }
+                  else{
+                      const f = files
+                        .map(file=> {
+                            if(
+                                file.contentType === "image/png" ||
+                                file.contentType === "image/jpeg" ||
+                                file.contentType === "image/jpg"
+                            ){
+                                file.isImage = true;
+                            } else {
+                                file.isImage = false;
+                            }
+                            return file;
+                        })
+                        .sort((a,b) => {
+                            return(
+                                new Date(b["uploadDate"]).getTime() - 
+                                new Date(a["uploadDate"]).getTime()
+                            )
+                        })
+                        return res.render("home", {
+                            products: docs,
+                            files: f
+                        })
+                  }
+              })
+          }
+      })
+  })
 
 router.get('/searchProduct', (req,res, next) => {
     res.render('searchProduct');
