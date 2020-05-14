@@ -138,18 +138,11 @@ router.post('/', (req,res,next) => {
         if(err){
             console.error('Error retrieving all product by I.D.!');
         }
-        else if(!product){
-            Product.find(function(err,docs){
-                var productChunks = []
-                var chunkSize = 3;
-                for(var i = 0; i < docs.length; i+=chunkSize){
-                    productChunks.push(docs.slice(i, i+chunkSize));
-                }
+        else if(product.length === 0){
                 res.render('home',{
-                    products: docs
+                    message: 'No items found'
                 })
-            })
-        }
+            }
         else{
             res.render('home', {
                 products:product
