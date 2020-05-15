@@ -8,7 +8,8 @@ var productSchema = new mongoose.Schema({
     price: {type:Number, required: true},
     thumbsUp: {type:Number, default: 0},
     thumbsDown: {type:Number, default: 0},
-    comments: [{type: Object}]
+    comments: [{type: Object}],
+    userPosted: {type:String,required:true}
     // comments: [{username: String, commentContent: String}]
 });
 
