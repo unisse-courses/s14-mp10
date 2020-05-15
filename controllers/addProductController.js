@@ -86,6 +86,41 @@ router.post('/', upload.single('file') ,(req, res) => {
     })
 });
 
+router.get('/editProduct/:id', (req,res) => {
+    Product.findById(req.params.id).exec(function (err,item){
+        if(err){
+            console.error('Error retreiving product by I.D.')
+        }
+        else{
+            res.render('editProduct', {
+               _id: item._id,
+               title: item.title,
+               price: item.price,
+               description: item.description,
+               url: item.imagePath,
+               userPosted: item.userPosted,
+            })
+        }
+    })
+})
+
+router.post('/editProduct/:id', (req,res,next) => {
+    Product.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err,doc) => {
+        if(!err){
+            res.redirect('/home')
+        }
+        else{
+            if(err.name == 'ValidationError'){
+                handleValidationError(err, req.body);
+                res.render('editProduct');
+            }
+            else{
+                console.log("Error during record update: "+ err);
+            }
+        }
+    })
+})
+
 router.get('/addComment/:id', (req, res, next) => {
     Product.findById(req.params.id)
     .exec(function (err, product){

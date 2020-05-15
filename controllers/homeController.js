@@ -318,12 +318,17 @@ router.post('/thumbsDown/:id', (req,res,next)=>{
 })
 
 router.get('/:id', (req,res,next) => {
-
     Product.findById(req.params.id).exec(function (err, item) {
         Comment.find({commentProduct: req.params.id}).exec(function(err, comment){
             if (err) {
                 console.error('Error retrieving all product by id!');
             } else {
+                if(req.session.username === item.userPosted){
+                    var userCreatedProduct = true;
+                }
+                else{
+                    var userCreatedProduct = false;
+                }
                 var commentObjects = [];
                 comment.forEach(function(doc){
                     commentObjects.push(doc.toObject());
@@ -336,7 +341,9 @@ router.get('/:id', (req,res,next) => {
                     price: item.price,
                     thumbsUp: item.thumbsUp,
                     thumbsDown: item.thumbsDown,
-                    comments: commentObjects
+                    userPosted: item.userPosted,
+                    comments: commentObjects,
+                    userCreatedProduct: userCreatedProduct
                 });
             }
         })

@@ -30,7 +30,7 @@ function updatingRecord(req,res){
         else{
             if(err.name == 'ValidationError'){
                 handleValidationError(err, req.body);
-                res.redner('editProfile');
+                res.render('editProfile');
             }
             else{
                 console.log("Error during record update: "+ err);
