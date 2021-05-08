@@ -33,6 +33,6 @@
   "description": "",
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "handlebars": "^4.7.5"
+    "handlebars": "^4.7.7"
   }
 }
